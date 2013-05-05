@@ -11,12 +11,18 @@ public class SimpleType<BT extends BasicType<BT>>
 		exp = e;
 	}
 	
+	public boolean isUnit()
+	{
+		return base.isUnit();
+	}
+	
+	//! Generalized Contraction rule
 	public boolean gcon(SimpleType<BT> a)
 	{
 		return
 				(a.exp == this.exp + 1) && 
 				((this.base.lessThan(a.base) && this.exp % 2 == 0) ||
-				 (a.base.lessThan(this.base) && this.exp % 2 == 1));
+				 (a.base.lessThan(this.base) && this.exp % 2 != 0));
 	}
 	
 	//! Left adjoint of the type
@@ -37,6 +43,9 @@ public class SimpleType<BT extends BasicType<BT>>
 	
 	public String toString()
 	{	
+		if(exp == 0)
+			return base.toString();
+		
 		return base.toString() + "^{" + exp + "}";
 	}
 }

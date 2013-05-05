@@ -12,11 +12,16 @@ public class FreeType implements BasicType<FreeType>
 	
 	public boolean lessThan(FreeType t)
 	{
-		return false;
+		return this.str.equals(t.str);
 	}
 	
 	public String toString()
 	{
 		return str;
+	}
+	
+	public boolean isUnit()
+	{
+		return str == "1";
 	}
 }

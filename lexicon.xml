@@ -7,4 +7,8 @@
 	<entry form="Jeanne">
 		<type>n</type>
     </entry>
+    <entry form="grande">
+    	<type>n n^{-1}</type>
+    	<type>a</type>
+    </entry>
 </xmllexicon>
