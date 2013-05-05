@@ -3,6 +3,8 @@ package app;
 import java.util.ArrayList;
 import java.util.List;
 
+import latex.TikzReduction;
+
 import xmllexicon.XmlLexicon;
 import pregroup.FreeType;
 import pregroup.PhraseString;
@@ -33,6 +35,8 @@ public class App {
 		System.out.println(phrase.toString());
 		
 		System.out.println("Parsing result : "+p.run());
+		
+		System.out.println(TikzReduction.draw(phrase, p.getReduction()));
 		
 	}
 }
