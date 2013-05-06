@@ -1,5 +1,7 @@
 package app;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,11 @@ public class App {
 		lex.load("lexicon.xml");
 		
 		List<String> sentence = new ArrayList<String>();
-		sentence.add("grande");
 		sentence.add("Jeanne");
 		sentence.add("est");
+		sentence.add("une");
 		sentence.add("grande");
+		sentence.add("femme");
 		
 		SimpleType<FreeType> target =
 				new SimpleType<FreeType>(new FreeType("s"), 0);
@@ -33,7 +36,17 @@ public class App {
 		Parser<FreeType> p = new Parser<FreeType>(phrase);
 		
 		if(p.run())
-			System.out.println(TikzReduction.draw(phrase, sentence, p.getReduction()));
+		{
+			System.out.println("Valid sentence.");
+			PrintWriter out;
+			try {
+				out = new PrintWriter("output.tex");
+				out.println(TikzReduction.draw(phrase, sentence, p.getReduction()));
+				out.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 		else
 			System.out.println("Invalid sentence.");
 		

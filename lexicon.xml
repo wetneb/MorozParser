@@ -9,6 +9,13 @@
     </entry>
     <entry form="grande">
     	<type>n n^{-1}</type>
+    	<type>n^{1} n</type>
     	<type>a</type>
+    </entry>
+    <entry form="une">
+    	<type>d n</type>
+    </entry>
+    <entry form="femme">
+    	<type>n^{1} d^{1} n</type>
     </entry>
 </xmllexicon>
