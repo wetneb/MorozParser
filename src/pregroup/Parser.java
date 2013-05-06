@@ -91,7 +91,7 @@ public class Parser<BT extends BasicType<BT>>
 			for(int k = i+1; k < j-1; k++)
 				if(isType(k) && reductible(i,k) && reductible(k+1,j))
 				{
-					red[i][j] = union(red[i][k], red[k+1][j]).link(i, j);
+					red[i][j] = union(red[i][k], red[k+1][j]);
 					return true;
 				}
 			
@@ -99,7 +99,7 @@ public class Parser<BT extends BasicType<BT>>
 			for(int k = i+1; k < j-1; k++)
 				if(isRB(k) && isLB(k+1) && reductible(i,k) && reductible(k+1,j))
 				{
-					red[i][j] = union(red[i][k], red[k+1][j]).link(i, j);
+					red[i][j] = union(red[i][k], red[k+1][j]);
 					return true;
 				}
 			

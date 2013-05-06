@@ -32,11 +32,10 @@ public class App {
 		
 		Parser<FreeType> p = new Parser<FreeType>(phrase);
 		
-		System.out.println(phrase.toString());
-		
-		System.out.println("Parsing result : "+p.run());
-		
-		System.out.println(TikzReduction.draw(phrase, p.getReduction()));
+		if(p.run())
+			System.out.println(TikzReduction.draw(phrase, sentence, p.getReduction()));
+		else
+			System.out.println("Invalid sentence.");
 		
 	}
 }

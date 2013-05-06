@@ -48,4 +48,20 @@ public class SimpleType<BT extends BasicType<BT>>
 		
 		return base.toString() + "^{" + exp + "}";
 	}
+	
+	public String toLatex()
+	{
+		if(exp == 0)
+			return base.toString();
+		String output = base.toString() + "^{";
+		if(exp > 0)
+		{
+			for(int i = 0; i < exp; i++)
+				output += "r";
+		}
+		else
+			for(int i = 0; i > exp; i--)
+				output += "l";
+		return (output+"}");
+	}
 }

@@ -5,15 +5,6 @@ import java.util.Vector;
 
 
 
-class RBElem implements PhraseElem
-{
-	public String toString() { return " > "; }
-	public boolean isType() { return false; }
-	public boolean isLB() { return false; }
-	public boolean isRB() { return true; }
-	public boolean isStar() { return false; }
-}
-
 //! A string made of simple types, *, < and >
 public class PhraseString<BT extends BasicType<BT>> extends Vector<PhraseElem>
 {

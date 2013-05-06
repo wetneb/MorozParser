@@ -54,6 +54,7 @@ public class XmlLexicon
 				TypeStringLexer lex = new TypeStringLexer(new StringReader(rt));
 				TypeString<FreeType> ft = new TypeString<FreeType>();
 				
+				//! Simple parsing algorithm
 				Symbol sym = lex.yylex();
 				try {
 					while(sym.type != TypeStringLexer.EOF)
