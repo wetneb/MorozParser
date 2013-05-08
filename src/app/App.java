@@ -2,7 +2,6 @@ package app;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import latex.TikzReduction;
@@ -19,12 +18,9 @@ public class App {
 		XmlLexicon lex = new XmlLexicon();
 		lex.load("lexicon.xml");
 		
-		List<String> sentence = new ArrayList<String>();
-		sentence.add("Jeanne");
-		sentence.add("est");
-		sentence.add("une");
-		sentence.add("grande");
-		sentence.add("femme");
+		String input = "no banks are rich";
+		
+		List<String> sentence = new SimpleTokenizer(input).toList();
 		
 		SimpleType<FreeType> target =
 				new SimpleType<FreeType>(new FreeType("s"), 0);

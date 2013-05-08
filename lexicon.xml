@@ -18,4 +18,44 @@
     <entry form="femme">
     	<type>n^{1} d^{1} n</type>
     </entry>
+    <entry form="merveilleuse">
+    	<type>n n^{-1}</type>
+    	<type>n^{1} n</type>
+    	<type>a</type>
+    </entry>
+    <entry form="qui">
+    	<type>n^{1} n s^{-1} n</type>
+    </entry>
+    
+    <entry form="John">
+    	<type>n</type>
+    </entry>
+    <entry form="Mary">
+    	<type>n</type>
+    </entry>
+    <entry form="bothers">
+    	<type>n^{1} s n^{-1}</type>
+    </entry>
+    
+    <entry form="no">
+    	<type>s s^{-1} n_2 c_2^{-1}</type>
+    </entry>
+    <entry form="are">
+    	<type>n_2^{1} s s^{-1} m</type>
+    </entry>
+    <entry form="and">
+    	<type>s^{1} s s^{-1}</type>
+    </entry>
+    <entry form="some">
+    	<type>n_2 c_2^{-1}</type>
+    </entry>
+    <entry form="big">
+    	<type>c_2 c_2^{-1}</type>
+    </entry>
+    <entry form="banks">
+    	<type>c_2</type>
+    </entry>
+    <entry form="rich">
+    	<type>m^{1} s</type>
+    </entry>
 </xmllexicon>
