@@ -112,7 +112,7 @@ public class Parser<BT extends BasicType<BT>>
 		}
 		
 		// A3a
-		if(isLB(i) && isType(j) && widx[i] < widx[j])
+		if(isLB(i) && isType(j))
 		{
 			for(int k = i+1; k < j && widx[k] == widx[i]; k++)
 				if(isStar(k) && reductible(k+1,j))
@@ -123,7 +123,7 @@ public class Parser<BT extends BasicType<BT>>
 		}
 		
 		// A3b
-		if(isRB(j) && isType(i) && widx[i] < widx[j])
+		if(isRB(j) && isType(i))
 		{
 			for(int k = j-1; k > i && widx[k] == widx[j]; k--)
 				if(isStar(k) && reductible(i,k-1))

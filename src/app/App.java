@@ -18,7 +18,7 @@ public class App {
 		XmlLexicon lex = new XmlLexicon();
 		lex.load("lexicon.xml");
 		
-		String input = "no banks are rich";
+		String input = "colourless green ideas sleep furiously";
 		
 		List<String> sentence = new SimpleTokenizer(input).toList();
 		

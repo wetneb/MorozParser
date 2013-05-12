@@ -58,4 +58,21 @@
     <entry form="rich">
     	<type>m^{1} s</type>
     </entry>
+
+
+    <entry form="colourless">
+        <type>a a^{1} p p^{-1}</type>
+    </entry>
+    <entry form="green">
+        <type>a a^{1} p p^{-1}</type>
+    </entry>
+    <entry form="ideas">
+        <type>p</type>
+    </entry>
+    <entry form="sleep">
+        <type>p^{1} s i^{-1} i</type>
+    </entry>
+    <entry form="furiously">
+        <type>i^{1} i</type>
+    </entry>
 </xmllexicon>

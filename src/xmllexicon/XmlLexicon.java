@@ -66,6 +66,7 @@ public class XmlLexicon
 						if(sym.type == TypeStringLexer.LBRA)
 						{
 							sym = lex.yylex();
+							//! TODO check that this cast is OK
 							exp = (Integer)sym.val;
 							sym = lex.yylex();
 							sym = lex.yylex();
