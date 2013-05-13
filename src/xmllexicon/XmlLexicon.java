@@ -23,12 +23,17 @@ public class XmlLexicon
 {
 	private static final long serialVersionUID = 1L;
 
-	public List<TypeString<FreeType>> types(String word)
+	public List<List<TypeString<FreeType>>> types(List<String> sentence)
 	{
-		List<TypeString<FreeType>> l = get(word);
-		if(l == null)
-			return new ArrayList<TypeString<FreeType>>();
-		return l;
+		List<List<TypeString<FreeType>>> res = new ArrayList<List<TypeString<FreeType>>>();
+		for(String word : sentence)
+		{
+			List<TypeString<FreeType>> l = get(word);
+			if(l == null)
+				res.add(new ArrayList<TypeString<FreeType>>());
+			else res.add(l);
+		}
+		return res;
 	}
 	
 	public void load(String filename)

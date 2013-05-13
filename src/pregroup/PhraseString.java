@@ -13,7 +13,7 @@ public class PhraseString<BT extends BasicType<BT>> extends Vector<PhraseElem>
 	// Construct from a list of words, a lexicon and a target type
 	public PhraseString(Lexicon<BT> lex, List<String> lst, TypeString<BT> target)
 	{
-		this(LexMap.map(lex, lst), target);
+		this(lex.types(lst), target);
 	}
 
 	// Construct from a list of type candidates and a target type
