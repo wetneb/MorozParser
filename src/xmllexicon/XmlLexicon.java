@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -55,34 +54,7 @@ public class XmlLexicon
 			List<TypeString<FreeType>> res = new ArrayList<TypeString<FreeType>>();
 			
 			for(String rt : rawTypes)
-			{
-				TypeStringLexer lex = new TypeStringLexer(new StringReader(rt));
-				TypeString<FreeType> ft = new TypeString<FreeType>();
-				
-				//! Simple parsing algorithm
-				Symbol sym = lex.yylex();
-				try {
-					while(sym.type != TypeStringLexer.EOF)
-					{
-						String bt = (String)sym.val;
-						sym = lex.yylex();
-						
-						int exp = 0;
-						if(sym.type == TypeStringLexer.LBRA)
-						{
-							sym = lex.yylex();
-							//! TODO check that this cast is OK
-							exp = (Integer)sym.val;
-							sym = lex.yylex();
-							sym = lex.yylex();
-						}
-						ft.add(new FreeType(bt), exp);
-					}
-				} catch(IOException ioe)
-				{ ; }
-				
-				res.add(ft);
-			}
+				res.add(SimpleTypeParser.parse(rt));
 			
 			put(form, res);
 		}

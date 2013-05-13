@@ -6,6 +6,7 @@ import java.util.List;
 
 import latex.TikzReduction;
 
+import xmllexicon.TagLexicon;
 import xmllexicon.XmlLexicon;
 import pregroup.FreeType;
 import pregroup.PhraseString;
@@ -15,8 +16,9 @@ import pregroup.Parser;
 public class App {
 	public static void main(String[] args)
 	{
-		XmlLexicon lex = new XmlLexicon();
-		lex.load("lexicon.xml");
+		TagLexicon lex = new TagLexicon();
+		lex.load("tags.xml");
+		lex.loadTagger("taggers/english-left3words-distsim.tagger");
 		
 		String input = "colourless green ideas sleep furiously";
 		

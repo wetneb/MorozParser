@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmllexicon>
+	<entry form="JJ">
+		<type>n n^{-1}</type>
+	</entry>
+	<entry form="NNS">
+		<type>n</type>
+	</entry>
+	<entry form="NN">
+		<type>n</type>
+	</entry>
+	<entry form="VBP">
+		<type>n^{1} s i^{-1} i</type>
+	</entry>
+	<entry form="RB">
+		<type>i^{1} i</type>
+	</entry>	
+</xmllexicon>
