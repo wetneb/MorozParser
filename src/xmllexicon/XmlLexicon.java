@@ -46,15 +46,17 @@ public class XmlLexicon
 				.unmarshal(new FileInputStream(filename));
 		
 		RawLexicon rl = (RawLexicon)lexicon.getValue();
-		List<EntryType> entries = rl.getEntry();
+		Entries entries = rl.getEntries();
+		TypeRelations rels = rl.getRelations();
 		
-		for(EntryType ent : entries) {
+		//! TODO : add error handling ! (if entries.getEntry() is null (when there's no <entries>)
+		for(EntryType ent : entries.getEntry()) {
 			String form = ent.getForm();
 			List<String> rawTypes = ent.getType();
 			List<TypeString<FreeType>> res = new ArrayList<TypeString<FreeType>>();
 			
 			for(String rt : rawTypes)
-				res.add(SimpleTypeParser.parse(rt));
+				res.add(SimpleTypeParser.parse(rt, rels));
 			
 			put(form, res);
 		}

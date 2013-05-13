@@ -4,15 +4,19 @@ package pregroup;
 public class FreeType implements BasicType<FreeType>
 {
 	private String str = "1";
+	private Comparator<FreeType> comparator = null;
 	
-	public FreeType(String s)
+	public FreeType(String s, Comparator<FreeType> c)
 	{
 		str = s;
+		comparator = c;
 	}
 	
 	public boolean lessThan(FreeType t)
 	{
-		return this.str.equals(t.str);
+		if(comparator == null)
+			return this.str.equals(t.str);
+		else return comparator.lessThan(this, t);
 	}
 	
 	public String toString()

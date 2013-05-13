@@ -1,78 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmllexicon>
-	<entry form="est">
-		<type>n^{1} s n^{-1}</type>
-		<type>n^{1} s a^{-1}</type>
-	</entry>
-	<entry form="Jeanne">
-		<type>n</type>
-    </entry>
-    <entry form="grande">
-    	<type>n n^{-1}</type>
-    	<type>n^{1} n</type>
-    	<type>a</type>
-    </entry>
-    <entry form="une">
-    	<type>d n</type>
-    </entry>
-    <entry form="femme">
-    	<type>n^{1} d^{1} n</type>
-    </entry>
-    <entry form="merveilleuse">
-    	<type>n n^{-1}</type>
-    	<type>n^{1} n</type>
-    	<type>a</type>
-    </entry>
-    <entry form="qui">
-    	<type>n^{1} n s^{-1} n</type>
-    </entry>
-    
-    <entry form="John">
-    	<type>n</type>
-    </entry>
-    <entry form="Mary">
-    	<type>n</type>
-    </entry>
-    <entry form="bothers">
-    	<type>n^{1} s n^{-1}</type>
-    </entry>
-    
-    <entry form="no">
-    	<type>s s^{-1} n_2 c_2^{-1}</type>
-    </entry>
-    <entry form="are">
-    	<type>n_2^{1} s s^{-1} m</type>
-    </entry>
-    <entry form="and">
-    	<type>s^{1} s s^{-1}</type>
-    </entry>
-    <entry form="some">
-    	<type>n_2 c_2^{-1}</type>
-    </entry>
-    <entry form="big">
-    	<type>c_2 c_2^{-1}</type>
-    </entry>
-    <entry form="banks">
-    	<type>c_2</type>
-    </entry>
-    <entry form="rich">
-    	<type>m^{1} s</type>
-    </entry>
+<lexicon>
+    <relations>
+        <rel smaller="p" greater="\pi_2" />
+        <rel smaller="i" greater="j" />
+    </relations>
+    <entries>
+        <entry form="est">
+            <type>n^{1} s n^{-1}</type>
+            <type>n^{1} s a^{-1}</type>
+        </entry>
+        <entry form="Jeanne">
+            <type>n</type>
+        </entry>
+        <entry form="grande">
+            <type>n n^{-1}</type>
+            <type>n^{1} n</type>
+            <type>a</type>
+        </entry>
+        <entry form="une">
+            <type>d n</type>
+        </entry>
+        <entry form="femme">
+            <type>n^{1} d^{1} n</type>
+        </entry>
+        <entry form="merveilleuse">
+            <type>n n^{-1}</type>
+            <type>n^{1} n</type>
+            <type>a</type>
+        </entry>
+        <entry form="qui">
+            <type>n^{1} n s^{-1} n</type>
+        </entry>
+        
+        <entry form="John">
+            <type>n</type>
+        </entry>
+        <entry form="Mary">
+            <type>n</type>
+        </entry>
+        <entry form="bothers">
+            <type>n^{1} s n^{-1}</type>
+        </entry>
+        
+        <entry form="no">
+            <type>s s^{-1} n_2 c_2^{-1}</type>
+        </entry>
+        <entry form="are">
+            <type>n_2^{1} s s^{-1} m</type>
+        </entry>
+        <entry form="and">
+            <type>s^{1} s s^{-1}</type>
+        </entry>
+        <entry form="some">
+            <type>n_2 c_2^{-1}</type>
+        </entry>
+        <entry form="big">
+            <type>c_2 c_2^{-1}</type>
+        </entry>
+        <entry form="banks">
+            <type>c_2</type>
+        </entry>
+        <entry form="rich">
+            <type>m^{1} s</type>
+        </entry>
 
 
-    <entry form="colourless">
-        <type>a a^{1} p p^{-1}</type>
-    </entry>
-    <entry form="green">
-        <type>a a^{1} p p^{-1}</type>
-    </entry>
-    <entry form="ideas">
-        <type>p</type>
-    </entry>
-    <entry form="sleep">
-        <type>p^{1} s i^{-1} i</type>
-    </entry>
-    <entry form="furiously">
-        <type>i^{1} i</type>
-    </entry>
-</xmllexicon>
+        <entry form="colourless">
+            <type>a a^{1} p p^{-1}</type>
+        </entry>
+        <entry form="green">
+            <type>a a^{1} p p^{-1}</type>
+        </entry>
+        <entry form="ideas">
+            <type>p</type>
+        </entry>
+        <entry form="sleep">
+            <type>\pi_2^{1} s j^{-1} i</type>
+        </entry>
+        <entry form="furiously">
+            <type>i^{1} i</type>
+        </entry>
+    </entries>
+</lexicon>

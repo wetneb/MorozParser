@@ -16,23 +16,23 @@ import pregroup.Parser;
 public class App {
 	public static void main(String[] args)
 	{
-		TagLexicon lex = new TagLexicon();
-		lex.load("tags.xml");
-		lex.loadTagger("taggers/english-left3words-distsim.tagger");
+		XmlLexicon lex = new XmlLexicon();
+		lex.load("lexicon.xml");
+		//lex.loadTagger("taggers/english-left3words-distsim.tagger");
 		
-		String input = "John walks a coloured father";
+		String input = "colourless green ideas sleep furiously";
 		
 		List<String> sentence = new SimpleTokenizer(input).toList();
 		
+		//! TODO null : this is a bug : fix this design issue
 		SimpleType<FreeType> target =
-				new SimpleType<FreeType>(new FreeType("s"), 0);
-		
+				new SimpleType<FreeType>(new FreeType("s", null), 0);
 		
 		PhraseString<FreeType> phrase =
 				new PhraseString<FreeType>(lex, sentence, target);
 		
 		Parser<FreeType> p = new Parser<FreeType>(phrase);
-		
+		System.out.println(phrase.toString());
 		if(p.run())
 		{
 			System.out.println("Valid sentence.");

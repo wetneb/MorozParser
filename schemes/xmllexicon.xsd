@@ -3,11 +3,24 @@
     xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
     jxb:version="2.0">
 
-<xsd:element name="xmllexicon" type="RawLexicon" />
+<xsd:element name="lexicon" type="RawLexicon" />
 
 <xsd:complexType name="RawLexicon">
     <xsd:sequence>
+        <xsd:element name="relations" type="TypeRelations" maxOccurs="1" minOccurs="1" />
+        <xsd:element name="entries" type="Entries" maxOccurs="1" />
+    </xsd:sequence>
+</xsd:complexType>
+
+<xsd:complexType name="Entries">
+    <xsd:sequence>
         <xsd:element name="entry" type="entryType" maxOccurs="unbounded" />
+    </xsd:sequence>
+</xsd:complexType>
+
+<xsd:complexType name="TypeRelations">
+    <xsd:sequence>
+        <xsd:element name="rel" type="TypeRel" maxOccurs="unbounded" />
     </xsd:sequence>
 </xsd:complexType>
 
@@ -16,6 +29,11 @@
         <xsd:element name="type" type="xsd:string" maxOccurs="unbounded" />
     </xsd:sequence>
     <xsd:attribute name="form" type="xsd:string" />
+</xsd:complexType>
+
+<xsd:complexType name="TypeRel">
+    <xsd:attribute name="smaller" type="xsd:string" />
+    <xsd:attribute name="greater" type="xsd:string" />
 </xsd:complexType>
 
 </xsd:schema>
