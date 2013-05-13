@@ -20,7 +20,7 @@ public class App {
 		lex.load("tags.xml");
 		lex.loadTagger("taggers/english-left3words-distsim.tagger");
 		
-		String input = "colourless green ideas sleep furiously";
+		String input = "John walks a coloured father";
 		
 		List<String> sentence = new SimpleTokenizer(input).toList();
 		

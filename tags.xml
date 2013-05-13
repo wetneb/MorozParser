@@ -2,17 +2,27 @@
 <xmllexicon>
 	<entry form="JJ">
 		<type>n n^{-1}</type>
+		<type>n^{1} n</type>
 	</entry>
 	<entry form="NNS">
 		<type>n</type>
 	</entry>
 	<entry form="NN">
 		<type>n</type>
+		<type>n^{1} d^{1} n</type>
+	</entry>
+	<entry form="NNP">
+		<type>n</type>
 	</entry>
 	<entry form="VBP">
-		<type>n^{1} s i^{-1} i</type>
+		<type>n^{1} s n^{-1}</type>
+		<type>n^{1} s</type>
 	</entry>
-	<entry form="RB">
-		<type>i^{1} i</type>
+	<entry form="VBZ">
+		<type>n^{1} s n^{-1}</type>
+		<type>n^{1} s</type>
+	</entry>
+	<entry form="DT">
+		<type>d n</type>
 	</entry>	
 </xmllexicon>
