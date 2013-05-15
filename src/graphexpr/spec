@@ -2,35 +2,78 @@
 
 import java_cup.runtime.*;
 
+import java.util.List;
+import java.util.ArrayList;
+
+action code {:
+
+public String name;
+
+:}
 
 /* Terminals */
-terminal    NODE_FRESH, NODE, LCHEV, RCHEV, NAME, VAR, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL;
+terminal    NODE_FRESH, NODE, LCHEV, RCHEV, NAME, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL;
+terminal Integer VAR;
 
 /* Non-terminals */
-non terminal    expr_list, expr, double_list, node, triple, double, string;
+non terminal List<GraphExpr>   expr_list;
+non terminal GraphExpr expr;
+non terminal List<DoubleExpr> double_list;
+non terminal NodeExpr node;
+non terminal TripleExpr triple;
+non terminal DoubleExpr double;
+non terminal String string;
 
 /* The grammar */
-expr_list ::= expr_list SEP expr
-            | expr;
+expr_list ::= expr_list:l SEP expr:e
+            {: l.add(e);
+               RESULT = l; :}
+            | expr:e
+            {: List<GraphExpr> l = new ArrayList<GraphExpr>();
+               l.add(e);
+               RESULT = l; :}
+            ;
 
-expr ::= node
-       | triple;
+expr ::= node:n
+       {: RESULT = n; :}
+       | triple:t
+       {: RESULT = t; :}
+       ;
 
-node ::= VAR
+node ::= VAR:v
+       {: RESULT = new VarExpr(v); :}
        | NULL
-       | NODE LCHEV NAME RCHEV
+       {: RESULT = new NullExpr(); :}
+       | NODE LCHEV string:n RCHEV
+       {: RESULT = new NamedNodeExpr(n); :}
        | NODE_FRESH
-       | LCRO node PLUS double_list RCRO;
+       {: RESULT = new FreshExpr(); :}
+       | LCRO node:n PLUS double_list:l RCRO
+       {: RESULT = new PlusExpr(n,l); :}
+       ;
 /* todo : add support for litterals */
 
-double ::= LPAREN string COMMA node RPAREN;
+double ::= LPAREN string:s COMMA node:n RPAREN
+        {: RESULT = new DoubleExpr(s,n); :}
+        ;
 
-double_list ::= double_list PLUS double
-            | double;
+double_list ::= double_list:t PLUS double:e
+            {: t.add(e);
+               RESULT = t; :}
+            | double:e
+            {: List<DoubleExpr> l = new ArrayList();
+               l.add(e);
+               RESULT = l; :}
+            ;
 
-triple ::= LPAREN node COMMA string COMMA node RPAREN;
+triple ::= LPAREN node:n COMMA string:p COMMA node:o RPAREN
+           {: RESULT = new TripleExpr(n,p,o); :}
+           ;
 
-string ::= NAME;
+string ::= NAME
+           {: RESULT = name; :}
+           ;
+
 /* todo : add support for litterals */
 
 
