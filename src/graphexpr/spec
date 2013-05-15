@@ -1,0 +1,36 @@
+// CUP specification for graph expressions
+
+import java_cup.runtime.*;
+
+
+/* Terminals */
+terminal    NODE_FRESH, NODE, LCHEV, RCHEV, NAME, VAR, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL;
+
+/* Non-terminals */
+non terminal    expr_list, expr, double_list, node, triple, double, string;
+
+/* The grammar */
+expr_list ::= expr_list SEP expr
+            | expr;
+
+expr ::= node
+       | triple;
+
+node ::= VAR
+       | NULL
+       | NODE LCHEV NAME RCHEV
+       | NODE_FRESH
+       | LCRO node PLUS double_list RCRO;
+/* todo : add support for litterals */
+
+double ::= LPAREN string COMMA node RPAREN;
+
+double_list ::= double_list PLUS double
+            | double;
+
+triple ::= LPAREN node COMMA string COMMA node RPAREN;
+
+string ::= NAME;
+/* todo : add support for litterals */
+
+
