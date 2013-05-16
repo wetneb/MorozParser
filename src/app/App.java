@@ -1,5 +1,8 @@
 package app;
 
+import graphexpr.GraphExprParser;
+import graphexpr.GraphExprLexer;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,6 +19,15 @@ import pregroup.Parser;
 public class App {
 	public static void main(String[] args)
 	{
+		GraphExprLexer lexer = new GraphExprLexer("[1+(name,2)]");
+		GraphExprParser parser = new GraphExprParser(lexer);
+		try {
+			parser.parse();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		XmlLexicon lex = new XmlLexicon();
 		lex.load("lexicon.xml");
 		//lex.loadTagger("taggers/english-left3words-distsim.tagger");
