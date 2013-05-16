@@ -9,9 +9,9 @@ public interface PhraseElem
 	public boolean isRB();
 	public boolean isStar();
 }
-class TypeElem<BT extends BasicType<BT>> implements PhraseElem
+class TypeElem implements PhraseElem
 {
-	public SimpleType<BT> val;
+	public SimpleType val;
 	
 	public String toString() { return val.toString(); }
 	public String toLatex() { return val.toLatex(); }

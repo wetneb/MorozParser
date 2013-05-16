@@ -15,8 +15,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import pregroup.Comparator;
-import pregroup.FreeType;
+import pregroup.PartialComparator;
 
 
 /**
@@ -42,7 +41,7 @@ import pregroup.FreeType;
 @XmlType(name = "TypeRelations", propOrder = {
     "rel"
 })
-public class TypeRelations implements Comparator<FreeType> {
+public class TypeRelations implements PartialComparator<String> {
 
     @XmlElement(required = true)
     protected List<TypeRel> rel;
@@ -77,15 +76,14 @@ public class TypeRelations implements Comparator<FreeType> {
     }
     
     /// MODIFICATION (will be lost on recompilation of xmllexicon.xsd)
-    public boolean lessThan(FreeType lhs, FreeType rhs)
+    public boolean lessThan(String lhs, String rhs)
     {
-    	String a = lhs.toString(), b = rhs.toString();
-    	if(a.equals(b))
+    	if(lhs.equals(rhs))
     		return true;
     	
     	for(TypeRel r : getRel())
     	{
-    		if(a.equals(r.smaller) && b.equals(r.greater))
+    		if(lhs.equals(r.smaller) && rhs.equals(r.greater))
     			return true;
     	}
     	

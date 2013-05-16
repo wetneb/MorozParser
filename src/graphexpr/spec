@@ -5,7 +5,6 @@ import java_cup.runtime.*;
 import java.util.List;
 import java.util.ArrayList;
 import pregroup.SimpleType;
-import pregroup.FreeType;
 
 action code {:
 
@@ -27,7 +26,7 @@ non terminal NodeExpr node;
 non terminal TripleExpr triple;
 non terminal DoubleExpr double;
 non terminal String string;
-non terminal SimpleType<FreeType> stype;
+non terminal SimpleType stype;
 non terminal Integer exp;
 
 /* The grammar */
@@ -88,9 +87,9 @@ string ::= NAME
 /* todo : add support for litterals */
 
 stype ::= IDENT:i COLON
-          {: RESULT = new SimpleType<FreeType>(new FreeType(i,null),0); :}
+          {: RESULT = new SimpleType(i,0); :}
         | IDENT:i LPAREN exp:e RPAREN COLON
-          {: RESULT = new SimpleType<FreeType>(new FreeType(i,null),e); :}
+          {: RESULT = new SimpleType(i,e); :}
         ;
 /* TODO : fix design issue (comparison of types) */
 

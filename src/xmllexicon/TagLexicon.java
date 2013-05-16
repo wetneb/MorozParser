@@ -7,7 +7,6 @@ import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.ling.Word;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
-import pregroup.FreeType;
 import pregroup.TypeString;
 
 public class TagLexicon extends XmlLexicon
@@ -20,9 +19,9 @@ public class TagLexicon extends XmlLexicon
 		tagger = new MaxentTagger(path);
 	}
 	
-	public List<List<TypeString<FreeType>>> types(List<String> sentence)
+	public List<List<TypeString>> types(List<String> sentence)
 	{
-		List<List<TypeString<FreeType>>> res = new ArrayList<List<TypeString<FreeType>>>();
+		List<List<TypeString>> res = new ArrayList<List<TypeString>>();
 		
 		if(tagger != null)
 		{
@@ -34,9 +33,9 @@ public class TagLexicon extends XmlLexicon
 			for(TaggedWord tw : taggedSentence)
 			{
 				System.out.println(tw.word() + " : " + tw.tag());
-				List<TypeString<FreeType>> l = get(tw.tag());
+				List<TypeString> l = get(tw.tag());
 				if(l == null)
-					res.add(new ArrayList<TypeString<FreeType>>());
+					res.add(new ArrayList<TypeString>());
 				else res.add(l);
 			}
 			return res;

@@ -2,14 +2,13 @@ package graphexpr;
 
 import java.util.List;
 
-import pregroup.FreeType;
 import pregroup.SimpleType;
 
 public class GraphExpr
 {
-	public SimpleType<FreeType> type;
+	public SimpleType type;
 	public PatternExpr pattern;
-	public GraphExpr(SimpleType<FreeType> t, PatternExpr p)
+	public GraphExpr(SimpleType t, PatternExpr p)
 	{
 		type = t;
 		pattern = p;

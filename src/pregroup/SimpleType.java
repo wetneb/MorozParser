@@ -1,11 +1,11 @@
 package pregroup;
 
-public class SimpleType<BT extends BasicType<BT>>
+public class SimpleType
 {
-	private BT base;
+	private String base;
 	private int exp;
 	
-	public SimpleType(BT bt, int e)
+	public SimpleType(String bt, int e)
 	{
 		base = bt;
 		exp = e;
@@ -13,30 +13,30 @@ public class SimpleType<BT extends BasicType<BT>>
 	
 	public boolean isUnit()
 	{
-		return base.isUnit();
+		return base == "1";
 	}
 	
 	//! Generalized Contraction rule
-	public boolean gcon(SimpleType<BT> a)
+	public boolean gcon(SimpleType a, PartialComparator<String> c)
 	{
-		return
-				(a.exp == this.exp + 1) && 
-				((this.base.lessThan(a.base) && this.exp % 2 == 0) ||
-				 (a.base.lessThan(this.base) && this.exp % 2 != 0));
+		return 
+		     	(a.exp == this.exp + 1) && 
+				((c.lessThan(this.base, a.base) && this.exp % 2 == 0) ||
+				 (c.lessThan(a.base, this.base) && this.exp % 2 != 0));
 	}
 	
 	//! Left adjoint of the type
-	public SimpleType<BT> left()
+	public SimpleType left()
 	{
-		SimpleType<BT> adj = this;
+		SimpleType adj = this;
 		adj.exp--;
 		return adj;
 	}
 	
 	//! Right adjoint of the type
-	public SimpleType<BT> right()
+	public SimpleType right()
 	{
-		SimpleType<BT> adj = this;
+		SimpleType adj = this;
 		adj.exp++;
 		return adj;
 	}
@@ -44,16 +44,16 @@ public class SimpleType<BT extends BasicType<BT>>
 	public String toString()
 	{	
 		if(exp == 0)
-			return base.toString();
+			return base;
 		
-		return base.toString() + "^{" + exp + "}";
+		return base + "^{" + exp + "}";
 	}
 	
 	public String toLatex()
 	{
 		if(exp == 0)
-			return base.toString();
-		String output = base.toString() + "^{";
+			return base;
+		String output = base + "^{";
 		if(exp > 0)
 		{
 			for(int i = 0; i < exp; i++)

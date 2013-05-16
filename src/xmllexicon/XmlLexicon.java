@@ -11,25 +11,27 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import pregroup.FreeType;
 import pregroup.Lexicon;
+import pregroup.PartialComparator;
 import pregroup.TypeString;
 
 
 public class XmlLexicon
-	extends HashMap<String, List<TypeString<FreeType>>>
-	implements Lexicon<FreeType>
+	extends HashMap<String, List<TypeString>>
+	implements Lexicon
 {
 	private static final long serialVersionUID = 1L;
+	
+	private TypeRelations rels;
 
-	public List<List<TypeString<FreeType>>> types(List<String> sentence)
+	public List<List<TypeString>> types(List<String> sentence)
 	{
-		List<List<TypeString<FreeType>>> res = new ArrayList<List<TypeString<FreeType>>>();
+		List<List<TypeString>> res = new ArrayList<List<TypeString>>();
 		for(String word : sentence)
 		{
-			List<TypeString<FreeType>> l = get(word);
+			List<TypeString> l = get(word);
 			if(l == null)
-				res.add(new ArrayList<TypeString<FreeType>>());
+				res.add(new ArrayList<TypeString>());
 			else res.add(l);
 		}
 		return res;
@@ -47,16 +49,16 @@ public class XmlLexicon
 		
 		RawLexicon rl = (RawLexicon)lexicon.getValue();
 		Entries entries = rl.getEntries();
-		TypeRelations rels = rl.getRelations();
+		rels = rl.getRelations();
 		
 		//! TODO : add error handling ! (if entries.getEntry() is null (when there's no <entries>)
 		for(EntryType ent : entries.getEntry()) {
 			String form = ent.getForm();
 			List<String> rawTypes = ent.getType();
-			List<TypeString<FreeType>> res = new ArrayList<TypeString<FreeType>>();
+			List<TypeString> res = new ArrayList<TypeString>();
 			
 			for(String rt : rawTypes)
-				res.add(SimpleTypeParser.parse(rt, rels));
+				res.add(SimpleTypeParser.parse(rt));
 			
 			put(form, res);
 		}
@@ -67,5 +69,10 @@ public class XmlLexicon
 			ioe.printStackTrace();
 		}
 		
+	}
+	
+	public PartialComparator<String> getComparator()
+	{
+		return rels;
 	}
 }

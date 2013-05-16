@@ -15,7 +15,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import pregroup.FreeType;
 import pregroup.TypeString;
 
 
@@ -24,23 +23,23 @@ public class SemanticLexicon
 {
 	private static final long serialVersionUID = 1L;
 
-	private static TypeString<FreeType> stringOfList(List<GraphExpr> l)
+	private static TypeString stringOfList(List<GraphExpr> l)
 	{
-		TypeString<FreeType> res = new TypeString<FreeType>();
+		TypeString res = new TypeString();
 		for(GraphExpr g : l)
 			res.add(g.type);
 		return res;
 	}
 	
-	public List<List<TypeString<FreeType>>> types(List<String> sentence)
+	public List<List<TypeString>> types(List<String> sentence)
 	{
-		List<List<TypeString<FreeType>>> res = new ArrayList<List<TypeString<FreeType>>>();
+		List<List<TypeString>> res = new ArrayList<List<TypeString>>();
 		for(String word : sentence)
 		{
 			List<List<GraphExpr>> o = get(word);
-			List<TypeString<FreeType>> l = new ArrayList<TypeString<FreeType>>();
+			List<TypeString> l = new ArrayList<TypeString>();
 			if(o == null)
-				res.add(new ArrayList<TypeString<FreeType>>());
+				res.add(new ArrayList<TypeString>());
 			else
 			{
 				for(List<GraphExpr> g : o)

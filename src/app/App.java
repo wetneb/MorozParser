@@ -12,7 +12,6 @@ import latex.TikzReduction;
 import xmllexicon.SemanticLexicon;
 import xmllexicon.TagLexicon;
 import xmllexicon.XmlLexicon;
-import pregroup.FreeType;
 import pregroup.PhraseString;
 import pregroup.SimpleType;
 import pregroup.Parser;
@@ -41,13 +40,13 @@ public class App {
 		List<String> sentence = new SimpleTokenizer(input).toList();
 		
 		//! TODO null : this is a bug : fix this design issue
-		SimpleType<FreeType> target =
-				new SimpleType<FreeType>(new FreeType("s", null), 0);
+		SimpleType target =
+				new SimpleType("s", 0);
 		
-		PhraseString<FreeType> phrase =
-				new PhraseString<FreeType>(lex, sentence, target);
+		PhraseString phrase =
+				new PhraseString(lex, sentence, target);
 		
-		Parser<FreeType> p = new Parser<FreeType>(phrase);
+		Parser p = new Parser(phrase, lex.getComparator());
 		System.out.println(phrase.toString());
 		if(p.run())
 		{

@@ -2,7 +2,6 @@ package latex;
 
 import java.util.List;
 
-import pregroup.BasicType;
 import pregroup.PhraseString;
 import pregroup.TypeLink;
 import pregroup.TypeReduction;
@@ -29,7 +28,7 @@ public class TikzReduction {
 	//! Vertical space between the original words and their types
 	private static final double textDistance = 0.6;
 	
-	public static<BT extends BasicType<BT>> String draw(PhraseString<BT> phrase, List<String> words, TypeReduction red)
+	public static String draw(PhraseString phrase, List<String> words, TypeReduction red)
 	{
 		int n = phrase.size();
 		double[] pos = new double[n];

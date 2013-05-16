@@ -1,6 +1,6 @@
 package pregroup;
 
-public interface Comparator<T>
+public interface PartialComparator<T>
 {
 	public boolean lessThan(T lhs, T rhs);
 }

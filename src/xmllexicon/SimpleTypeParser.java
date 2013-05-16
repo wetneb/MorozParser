@@ -3,16 +3,15 @@ package xmllexicon;
 import java.io.IOException;
 import java.io.StringReader;
 
-import pregroup.Comparator;
-import pregroup.FreeType;
+import pregroup.PartialComparator;
 import pregroup.TypeString;
 
 public class SimpleTypeParser
 {
-	static TypeString<FreeType> parse(String input, Comparator<FreeType> c)
+	static TypeString parse(String input)
 	{
 		TypeStringLexer lex = new TypeStringLexer(new StringReader(input));
-		TypeString<FreeType> ft = new TypeString<FreeType>();
+		TypeString ft = new TypeString();
 		
 		//! TODO :handle scan errors from TypeStringLexer
 		//! Simple parsing algorithm
@@ -32,7 +31,7 @@ public class SimpleTypeParser
 					sym = lex.yylex();
 					sym = lex.yylex();
 				}
-				ft.add(new FreeType(bt,c), exp);
+				ft.add(bt, exp);
 			}
 		} catch(IOException ioe)
 		{ ; }

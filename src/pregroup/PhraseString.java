@@ -3,27 +3,25 @@ package pregroup;
 import java.util.List;
 import java.util.Vector;
 
-
-
 //! A string made of simple types, *, < and >
-public class PhraseString<BT extends BasicType<BT>> extends Vector<PhraseElem>
+public class PhraseString extends Vector<PhraseElem>
 {
 	private static final long serialVersionUID = 1L;
 	
 	// Construct from a list of words, a lexicon and a target type
-	public PhraseString(Lexicon<BT> lex, List<String> lst, TypeString<BT> target)
+	public PhraseString(Lexicon lex, List<String> lst, TypeString target)
 	{
 		this(lex.types(lst), target);
 	}
 
 	// Construct from a list of type candidates and a target type
-	public PhraseString(List<List<TypeString<BT>>> lst, TypeString<BT> target)
+	public PhraseString(List<List<TypeString>> lst, TypeString target)
 	{
-		for(List<TypeString<BT>> candidates : lst)
+		for(List<TypeString> candidates : lst)
 		{
 			addLB();
 			addStar();
-			for(TypeString<BT> type : candidates)
+			for(TypeString type : candidates)
 			{
 				addType(type);
 				addStar();
@@ -38,9 +36,9 @@ public class PhraseString<BT extends BasicType<BT>> extends Vector<PhraseElem>
 		addType(target.right());
 	}
 	
-	public PhraseString(Lexicon<BT> lex, List<String> sentence,
-			SimpleType<BT> target) {
-		this(lex,sentence,new TypeString<BT>(target));
+	public PhraseString(Lexicon lex, List<String> sentence,
+			SimpleType target) {
+		this(lex,sentence,new TypeString(target));
 	}
 	
 
@@ -69,16 +67,16 @@ public class PhraseString<BT extends BasicType<BT>> extends Vector<PhraseElem>
 		this.add(new StarElem());
 	}
 	
-	private void addType(SimpleType<BT> t)
+	private void addType(SimpleType t)
 	{
-		TypeElem<BT> elem = new TypeElem<BT>();
+		TypeElem elem = new TypeElem();
 		elem.val = t;
 		add(elem);
 	}
 	
-	private void addType(TypeString<BT> lst)
+	private void addType(TypeString lst)
 	{
-		for(SimpleType<BT> t : lst)
+		for(SimpleType t : lst)
 			addType(t);
 	}
 }

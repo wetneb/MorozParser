@@ -2,9 +2,9 @@ package pregroup;
 
 
 //! Implementation of Moroz's algorithm
-public class Parser<BT extends BasicType<BT>>
+public class Parser
 {
-	private PhraseString<BT> phrase;
+	private PhraseString phrase;
 	//! Length of the TypePhrase
 	private int n;
 	//! What is a type reduction for the substring [i,j] ?
@@ -13,12 +13,15 @@ public class Parser<BT extends BasicType<BT>>
 	private int[][] state;
 	//! Index of words
 	private int[] widx;
+	//! Comparator for the types
+	PartialComparator<String> comp;
 	
 	public final static int UNDEF = -1;
 	
-	public Parser(PhraseString<BT> phr)
+	public Parser(PhraseString phr, PartialComparator<String> c)
 	{
 		phrase = phr;
+		comp = c;
 		n = phrase.size();
 		red = new TypeReduction[n][n];
 		state = new int[n][n];
@@ -207,9 +210,9 @@ public class Parser<BT extends BasicType<BT>>
 		return phrase.get(pos);
 	}
 	
-	private SimpleType<BT> at(int pos)
+	private SimpleType at(int pos)
 	{
-		return ((TypeElem<BT>)phrase.get(pos)).val;
+		return ((TypeElem)phrase.get(pos)).val;
 	}
 	
 	private boolean isType(int pos)
@@ -239,7 +242,8 @@ public class Parser<BT extends BasicType<BT>>
 	
 	private boolean gcon(int i, int j)
 	{
-		return (isType(i) && isType(j) && at(i).gcon(at(j)));
+		return (isType(i) && isType(j) &&
+				at(i).gcon(at(j), comp));
 	}
 	
 	private static TypeReduction empty()
