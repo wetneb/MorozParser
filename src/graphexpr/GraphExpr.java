@@ -2,13 +2,27 @@ package graphexpr;
 
 import java.util.List;
 
-abstract class GraphExpr
+import pregroup.FreeType;
+import pregroup.SimpleType;
+
+public class GraphExpr
+{
+	public SimpleType<FreeType> type;
+	public PatternExpr pattern;
+	public GraphExpr(SimpleType<FreeType> t, PatternExpr p)
+	{
+		type = t;
+		pattern = p;
+	}
+}
+
+abstract class PatternExpr
 {
 	public boolean isNode() { return (this instanceof NodeExpr); }
 	public boolean isTriple() { return (this instanceof TripleExpr); }
 }
 
-class NodeExpr extends GraphExpr
+class NodeExpr extends PatternExpr
 {
 	public boolean isNull() { return (this instanceof NullExpr); }
 	public boolean isVar() { return (this instanceof VarExpr); }
@@ -63,7 +77,7 @@ class DoubleExpr
 	}
 }
 
-class TripleExpr extends GraphExpr
+class TripleExpr extends PatternExpr
 {
 	public NodeExpr subj;
 	public String prop;

@@ -19,7 +19,7 @@ import pregroup.Parser;
 public class App {
 	public static void main(String[] args)
 	{
-		GraphExprLexer lexer = new GraphExprLexer("[1+(name,2)]");
+		GraphExprLexer lexer = new GraphExprLexer("blabla(ll) : [1+(name,2)]");
 		GraphExprParser parser = new GraphExprParser(lexer);
 		try {
 			parser.parse();

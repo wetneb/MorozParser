@@ -4,6 +4,8 @@ import java_cup.runtime.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import pregroup.SimpleType;
+import pregroup.FreeType;
 
 action code {:
 
@@ -12,17 +14,21 @@ public String name;
 :}
 
 /* Terminals */
-terminal    NODE_FRESH, NODE, LCHEV, RCHEV, NAME, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL;
-terminal Integer VAR;
+terminal    NODE_FRESH, NODE, LCHEV, RCHEV, NAME, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL, COLON;
+terminal String IDENT;
+terminal Integer VAR, EXPR, EXPL;
 
 /* Non-terminals */
 non terminal List<GraphExpr>   expr_list;
+non terminal PatternExpr pattern;
 non terminal GraphExpr expr;
 non terminal List<DoubleExpr> double_list;
 non terminal NodeExpr node;
 non terminal TripleExpr triple;
 non terminal DoubleExpr double;
 non terminal String string;
+non terminal SimpleType<FreeType> stype;
+non terminal Integer exp;
 
 /* The grammar */
 expr_list ::= expr_list:l SEP expr:e
@@ -34,7 +40,11 @@ expr_list ::= expr_list:l SEP expr:e
                RESULT = l; :}
             ;
 
-expr ::= node:n
+expr ::= stype:st pattern:p
+        {: RESULT = new GraphExpr(st,p); :}
+        ;
+
+pattern ::= node:n
        {: RESULT = n; :}
        | triple:t
        {: RESULT = t; :}
@@ -73,7 +83,15 @@ triple ::= LPAREN node:n COMMA string:p COMMA node:o RPAREN
 string ::= NAME
            {: RESULT = name; :}
            ;
-
 /* todo : add support for litterals */
 
+stype ::= IDENT:i COLON
+          {: RESULT = new SimpleType<FreeType>(new FreeType(i,null),0); :}
+        | IDENT:i LPAREN exp:e RPAREN COLON
+          {: RESULT = new SimpleType<FreeType>(new FreeType(i,null),e); :}
+        ;
+/* TODO : fix design issue (comparison of types) */
+
+exp ::= EXPL:e {: RESULT = -e; :}
+      | EXPR:e {: RESULT = e; :};
 

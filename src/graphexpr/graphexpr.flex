@@ -34,8 +34,9 @@ WhiteSpace = {LineTerminator} | [ \t\f]
 var = 0|([1-9][0-9]*)
 
 
-basic_type = [\\A-Za-z_][\\A-Za-z_0-9]*
-
+ident = [\\A-Za-z_][\\A-Za-z_0-9]*
+expl = l+
+expr = r+
 
 %%
 
@@ -54,7 +55,11 @@ basic_type = [\\A-Za-z_][\\A-Za-z_0-9]*
 "["             { return symbol(sym.LCRO); }
 "]"             { return symbol(sym.RCRO); }
 "+"             { return symbol(sym.PLUS); }
+":"             { return symbol(sym.COLON); }
 "null"          { return symbol(sym.NULL); }
+{expl}          { return symbol(sym.EXPL, yytext().length()); }
+{expr}          { return symbol(sym.EXPR, yytext().length()); }
+{ident}         { return symbol(sym.IDENT, yytext()); }
 {WhiteSpace}    { /* ignore */ }
 }
 
