@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lexicon>
+    <entries>
+        <entry form="JJ">
+            <type>n : [1+(name,null)] ; n(l) : 1</type>
+            <type>n(r) : 1 ; n : [1+(name,null)]</type>
+        </entry>
+        <entry form="NNS">
+            <type>n : node(name)</type>
+        </entry>
+        <entry form="NN">
+            <type>n : node(name)</type>
+            <type>n(r) : 1; d(r) : 2; n : [1+("rdf:type",node(name))] </type>
+        </entry>
+        <entry form="NNP">
+            <type>n : node(name)</type>
+        </entry>
+        <entry form="VBP">
+            <type>n(r) : 1; s : (1,name,2); n(l) : 2</type>
+            <type>n(r) : 1; s : (1,name,null)</type>
+        </entry>
+        <entry form="VBZ">
+            <type>n(r) : 1; s : (1,name,2); n(l) : 2</type>
+            <type>n(r) : 1; s : (1,name,null)</type>
+        </entry>
+        <entry form="DT">
+            <type>d : null; n : fresh_node</type>
+        </entry>
+    </entries>    
+</lexicon>

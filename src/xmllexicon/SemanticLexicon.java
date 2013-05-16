@@ -56,7 +56,7 @@ public class SemanticLexicon
 		try {
 		JAXBContext jaxbContext;
 			jaxbContext = JAXBContext
-					.newInstance("graphexpr");
+					.newInstance("xmllexicon");
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 		JAXBElement<?> lexicon = (JAXBElement<?>)unmarshaller
 				.unmarshal(new FileInputStream(filename));
@@ -81,8 +81,9 @@ public class SemanticLexicon
 					if(s.value != null)
 						res.add((List<GraphExpr>)(s.value));
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.err.println("Unable to parse the following type:");
+					System.err.println(rt);
+					//! TODO throw an exception here
 				}
 			}
 			

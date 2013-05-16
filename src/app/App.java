@@ -9,6 +9,7 @@ import java.util.List;
 
 import latex.TikzReduction;
 
+import xmllexicon.SemanticLexicon;
 import xmllexicon.TagLexicon;
 import xmllexicon.XmlLexicon;
 import pregroup.FreeType;
@@ -30,6 +31,9 @@ public class App {
 		
 		XmlLexicon lex = new XmlLexicon();
 		lex.load("lexicon.xml");
+		
+		SemanticLexicon sem = new SemanticLexicon();
+		sem.load("semantics.xml");
 		//lex.loadTagger("taggers/english-left3words-distsim.tagger");
 		
 		String input = "colourless green ideas sleep furiously";

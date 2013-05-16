@@ -14,8 +14,8 @@ public String name;
 :}
 
 /* Terminals */
-terminal    NODE_FRESH, NODE, LCHEV, RCHEV, NAME, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL, COLON;
-terminal String IDENT;
+terminal    NODE_FRESH, NODE, NAME, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL, COLON;
+terminal String IDENT, STR;
 terminal Integer VAR, EXPR, EXPL;
 
 /* Non-terminals */
@@ -54,7 +54,7 @@ node ::= VAR:v
        {: RESULT = new VarExpr(v); :}
        | NULL
        {: RESULT = new NullExpr(); :}
-       | NODE LCHEV string:n RCHEV
+       | NODE LPAREN string:n RPAREN
        {: RESULT = new NamedNodeExpr(n); :}
        | NODE_FRESH
        {: RESULT = new FreshExpr(); :}
@@ -82,6 +82,8 @@ triple ::= LPAREN node:n COMMA string:p COMMA node:o RPAREN
 
 string ::= NAME
            {: RESULT = name; :}
+         | STR:s
+           {: RESULT = s; :}
            ;
 /* todo : add support for litterals */
 

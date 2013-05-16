@@ -13,6 +13,8 @@ import java.io.StringReader;
 
 %{
 /* This code will be included in the class */
+    private StringBuffer string = new StringBuffer();
+
     public GraphExprLexer(String input)
     {
         this(new StringReader(input));
@@ -30,13 +32,13 @@ import java.io.StringReader;
 LineTerminator = \r|\n|\r\n
 WhiteSpace = {LineTerminator} | [ \t\f]
 
-
 var = 0|([1-9][0-9]*)
-
 
 ident = [\\A-Za-z_][\\A-Za-z_0-9]*
 expl = l+
 expr = r+
+
+%state STRING
 
 %%
 
@@ -44,8 +46,6 @@ expr = r+
 <YYINITIAL> {
 "fresh_node"    { return symbol(sym.NODE_FRESH); }
 "node"          { return symbol(sym.NODE); }
-"<"             { return symbol(sym.LCHEV); }
-">"             { return symbol(sym.RCHEV); }
 "name"          { return symbol(sym.NAME); }
 {var}           { return symbol(sym.VAR, Integer.parseInt(yytext())); }
 "("             { return symbol(sym.LPAREN); }
@@ -60,6 +60,14 @@ expr = r+
 {expl}          { return symbol(sym.EXPL, yytext().length()); }
 {expr}          { return symbol(sym.EXPR, yytext().length()); }
 {ident}         { return symbol(sym.IDENT, yytext()); }
+"\""            { string.setLength(0); yybegin(STRING); }
 {WhiteSpace}    { /* ignore */ }
+}
+
+<STRING> {
+    \"          { yybegin(YYINITIAL); return symbol(sym.STR,string.toString()); } 
+    [^\"\\]     { string.append(yytext()); }
+    \\\"        { string.append("\""); }
+    \\          { string.append("\\"); }
 }
 
