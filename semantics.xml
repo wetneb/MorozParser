@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lexicon>
+    <relations>
+        <rel smaller="p" greater="\pi_2" />
+        <rel smaller="i" greater="j" />
+    </relations>
     <entries>
         <entry form="JJ">
-            <type>n : [1+(name,null)] ; n(l) : 1</type>
-            <type>n(r) : 1 ; n : [1+(name,null)]</type>
+            <type>n : [1+("isNAME",null)] ; n(l) : 1</type>
+            <type>n(r) : 1 ; n : [1+("isNAME",null)]</type>
         </entry>
         <entry form="NNS">
-            <type>n : node(name)</type>
+            <type>n : node("NAME")</type>
         </entry>
         <entry form="NN">
-            <type>n : node(name)</type>
-            <type>n(r) : 1; d(r) : 2; n : [1+("rdf:type",node(name))] </type>
+            <type>n : node("NAME")</type>
+            <type>n(r) : 1; d(r) : 2; n : [1+("rdf:type",node("NAME"))] </type>
         </entry>
         <entry form="NNP">
-            <type>n : node(name)</type>
+            <type>n : node("NAME")</type>
         </entry>
         <entry form="VBP">
-            <type>n(r) : 1; s : (1,name,2); n(l) : 2</type>
-            <type>n(r) : 1; s : (1,name,null)</type>
+            <type>n(r) : 1; s : (1,"NAME",2); n(l) : 2</type>
+            <type>n(r) : 1; s : (1,"NAME",null)</type>
         </entry>
         <entry form="VBZ">
-            <type>n(r) : 1; s : (1,name,2); n(l) : 2</type>
-            <type>n(r) : 1; s : (1,name,null)</type>
+            <type>n(r) : 1; s : (1,"NAME",2); n(l) : 2</type>
+            <type>n(r) : 1; s : (1,"NAME",null)</type>
         </entry>
         <entry form="DT">
             <type>d : null; n : fresh_node</type>

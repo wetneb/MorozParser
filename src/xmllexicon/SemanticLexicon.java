@@ -15,19 +15,50 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import pregroup.Lexicon;
+import pregroup.PartialComparator;
 import pregroup.TypeString;
 
 
 public class SemanticLexicon
 	extends HashMap<String, List<List<GraphExpr>>>
+    implements Lexicon
 {
 	private static final long serialVersionUID = 1L;
+	
+	private TypeRelations rels;
 
 	private static TypeString stringOfList(List<GraphExpr> l)
 	{
 		TypeString res = new TypeString();
 		for(GraphExpr g : l)
 			res.add(g.type);
+		return res;
+	}
+	
+	public List<List<List<GraphExpr>>> graphExprs(List<String> tags)
+	{
+		List<List<List<GraphExpr>>> res = new ArrayList<List<List<GraphExpr>>>();
+		
+		for(String tag : tags)
+		{
+			List<List<GraphExpr>> l = get(tag);
+
+			if(l != null)
+			{
+				List<List<GraphExpr>> cloned = new ArrayList<List<GraphExpr>>();
+				for(List<GraphExpr> l1 :l)
+				{
+					List<GraphExpr> l2 = new ArrayList<GraphExpr>();
+					for(GraphExpr ge : l1)
+						l2.add((GraphExpr)ge.clone());
+					cloned.add(l2);
+				}
+				res.add(cloned);
+			}
+			// TODO THROW AN EXCEPTION otherwise
+		}
+		
 		return res;
 	}
 	
@@ -62,8 +93,8 @@ public class SemanticLexicon
 		
 		RawLexicon rl = (RawLexicon)lexicon.getValue();
 		Entries entries = rl.getEntries();
-		TypeRelations rels = rl.getRelations();
-		//! TODO : HANDLE RELATIONS !
+		rels = rl.getRelations();
+		//! TODO : if rels == null…
 		
 		//! TODO : add error handling ! (if entries.getEntry() is null (when there's no <entries>)
 		for(EntryType ent : entries.getEntry()) {
@@ -95,5 +126,9 @@ public class SemanticLexicon
 			ioe.printStackTrace();
 		}
 		
+	}
+
+	public PartialComparator<String> getComparator() {
+		return rels;
 	}
 }

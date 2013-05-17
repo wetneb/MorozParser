@@ -10,7 +10,7 @@ public class TypeString extends ArrayList<SimpleType>
 	//! Construct an empty type string
 	public TypeString()
 	{
-		super();
+
 	}
 	
 	//! Construct a type string from a simple type (makes a singleton)

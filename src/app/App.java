@@ -1,11 +1,14 @@
 package app;
 
+import graphexpr.ExprResolver;
 import graphexpr.GraphExprParser;
 import graphexpr.GraphExprLexer;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
+
+import com.hp.hpl.jena.rdf.model.Statement;
 
 import latex.TikzReduction;
 
@@ -15,44 +18,51 @@ import xmllexicon.XmlLexicon;
 import pregroup.PhraseString;
 import pregroup.SimpleType;
 import pregroup.Parser;
+import rdf.GraphCompiler;
+import rdf.GraphString;
+import rdf.TypeException;
+import tagging.StanfordTagger;
 
 public class App {
 	public static void main(String[] args)
-	{
-		GraphExprLexer lexer = new GraphExprLexer("blabla(ll) : [1+(name,2)]");
-		GraphExprParser parser = new GraphExprParser(lexer);
-		try {
-			parser.parse();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		XmlLexicon lex = new XmlLexicon();
-		lex.load("lexicon.xml");
-		
+	{	
 		SemanticLexicon sem = new SemanticLexicon();
 		sem.load("semantics.xml");
-		//lex.loadTagger("taggers/english-left3words-distsim.tagger");
+		//lex.loadTagger();
 		
-		String input = "colourless green ideas sleep furiously";
+		String input = "John loves a sweet girl";
 		
 		List<String> sentence = new SimpleTokenizer(input).toList();
 		
-		//! TODO null : this is a bug : fix this design issue
 		SimpleType target =
 				new SimpleType("s", 0);
 		
-		PhraseString phrase =
-				new PhraseString(lex, sentence, target);
+		StanfordTagger tagger = new StanfordTagger();
+		tagger.loadTagger("taggers/english-left3words-distsim.tagger");
 		
-		Parser p = new Parser(phrase, lex.getComparator());
+		GraphString phrase =
+				new GraphString(sem, tagger.tagSentence(sentence), sentence, target);
+		
+		Parser p = new Parser(phrase, sem.getComparator());
 		System.out.println(phrase.toString());
 		if(p.run())
 		{
 			System.out.println("Valid sentence.");
 			PrintWriter out;
 			try {
+				ExprResolver resolver = new ExprResolver(phrase, p.getReduction());
+				GraphCompiler compiler = new GraphCompiler(resolver);
+				// TODO
+				try {
+					Statement res = compiler.compileStmt(phrase.getPattern(resolver.getEntryPoint()));
+					compiler.assume(res);
+					
+					System.out.println("## OUTPUT ##");
+					compiler.dumpTriples();
+				} catch (TypeException e) {
+					System.out.println(e.what);
+				}
+				
 				out = new PrintWriter("output.tex");
 				out.println(TikzReduction.draw(phrase, sentence, p.getReduction()));
 				out.close();

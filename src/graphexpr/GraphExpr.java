@@ -3,7 +3,7 @@ package graphexpr;
 
 import pregroup.SimpleType;
 
-public class GraphExpr
+public class GraphExpr implements Cloneable
 {
 	public SimpleType type;
 	public PatternExpr pattern;
@@ -11,6 +11,16 @@ public class GraphExpr
 	{
 		type = t;
 		pattern = p;
+	}
+	
+	public Object clone()
+	{
+		return new GraphExpr(type, (PatternExpr) pattern.clone());
+	}
+	
+	public String toString()
+	{
+		return type.toString() + " : " + pattern.toString();
 	}
 }
 

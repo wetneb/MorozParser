@@ -1,24 +1,32 @@
 package graphexpr;
 
 import java.util.HashMap;
-import java.util.List;
 
-import pregroup.PhraseString;
 import pregroup.TypeLink;
 import pregroup.TypeReduction;
+import rdf.GraphString;
 
 public class ExprResolver extends HashMap<Integer, PatternExpr>
 {
 	private static final long serialVersionUID = 1L;
 	
-	public ExprResolver(PhraseString phr, TypeReduction red, List<GraphExpr> lst)
+	private int entrypoint;
+
+	public ExprResolver(GraphString phr, TypeReduction red)
 	{
 		super();
 		
 		for(TypeLink link : red)
 		{
-			this.put(link.start, lst.get(link.start).pattern);
-			this.put(link.end, lst.get(link.end).pattern);
+			this.put(link.start, phr.getPattern(link.end));
+			this.put(link.end, phr.getPattern(link.start));
+			if(link.end == phr.size()-1)
+				entrypoint = link.start;
 		}
+	}
+	
+	public int getEntryPoint()
+	{
+		return entrypoint;
 	}
 }

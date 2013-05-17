@@ -46,7 +46,6 @@ expr = r+
 <YYINITIAL> {
 "fresh_node"    { return symbol(sym.NODE_FRESH); }
 "node"          { return symbol(sym.NODE); }
-"name"          { return symbol(sym.NAME); }
 {var}           { return symbol(sym.VAR, Integer.parseInt(yytext())); }
 "("             { return symbol(sym.LPAREN); }
 ")"             { return symbol(sym.RPAREN); }

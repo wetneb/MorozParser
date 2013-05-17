@@ -8,6 +8,12 @@ public class PhraseString extends Vector<PhraseElem>
 {
 	private static final long serialVersionUID = 1L;
 	
+	// Construct an empty phrase string
+	public PhraseString()
+	{
+		
+	}
+	
 	// Construct from a list of words, a lexicon and a target type
 	public PhraseString(Lexicon lex, List<String> lst, TypeString target)
 	{
@@ -52,17 +58,17 @@ public class PhraseString extends Vector<PhraseElem>
 		return res;
 	}
 	
-	private void addLB()
+	protected void addLB()
 	{
 		this.add(new LBElem());
 	}
 	
-	private void addRB()
+	protected void addRB()
 	{
 		this.add(new RBElem());
 	}
 	
-	private void addStar()
+	protected void addStar()
 	{
 		this.add(new StarElem());
 	}
@@ -74,7 +80,7 @@ public class PhraseString extends Vector<PhraseElem>
 		add(elem);
 	}
 	
-	private void addType(TypeString lst)
+	protected void addType(TypeString lst)
 	{
 		for(SimpleType t : lst)
 			addType(t);

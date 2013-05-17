@@ -6,14 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 import pregroup.SimpleType;
 
-action code {:
-
-public String name;
-
-:}
-
 /* Terminals */
-terminal    NODE_FRESH, NODE, NAME, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL, COLON, SUB, REL, OBJ;
+terminal    NODE_FRESH, NODE, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL, COLON, SUB, REL, OBJ;
 terminal String IDENT, STR;
 terminal Integer VAR, EXPR, EXPL;
 
@@ -65,7 +59,7 @@ node ::= VAR:v
        | LCRO node:n PLUS double_list:l RCRO
        {: RESULT = new PlusExpr(n,l); :}
        ;
-/* todo : add support for litterals */
+/* todo : add support for literals */
 
 double ::= LPAREN prop:s COMMA node:n RPAREN
         {: RESULT = new DoubleExpr(s,n); :}
@@ -75,7 +69,7 @@ double_list ::= double_list:t PLUS double:e
             {: t.add(e);
                RESULT = t; :}
             | double:e
-            {: List<DoubleExpr> l = new ArrayList();
+            {: List<DoubleExpr> l = new ArrayList<DoubleExpr>();
                l.add(e);
                RESULT = l; :}
             ;
@@ -84,9 +78,7 @@ triple ::= LPAREN node:n COMMA prop:p COMMA node:o RPAREN
            {: RESULT = new TripleExpr(n,p,o); :}
            ;
 
-string ::= NAME
-           {: RESULT = name; :}
-         | STR:s
+string ::= STR:s
            {: RESULT = s; :}
           ;
 
