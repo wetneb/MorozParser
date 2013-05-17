@@ -13,7 +13,7 @@ public String name;
 :}
 
 /* Terminals */
-terminal    NODE_FRESH, NODE, NAME, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL, COLON;
+terminal    NODE_FRESH, NODE, NAME, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL, COLON, SUB, REL, OBJ;
 terminal String IDENT, STR;
 terminal Integer VAR, EXPR, EXPL;
 
@@ -23,9 +23,10 @@ non terminal PatternExpr pattern;
 non terminal GraphExpr expr;
 non terminal List<DoubleExpr> double_list;
 non terminal NodeExpr node;
+non terminal String string;
 non terminal TripleExpr triple;
 non terminal DoubleExpr double;
-non terminal String string;
+non terminal PropExpr prop;
 non terminal SimpleType stype;
 non terminal Integer exp;
 
@@ -51,6 +52,10 @@ pattern ::= node:n
 
 node ::= VAR:v
        {: RESULT = new VarExpr(v); :}
+       | SUB node:v
+       {: RESULT = new SubExpr(v); :}
+       | OBJ node:v
+       {: RESULT = new ObjExpr(v); :}
        | NULL
        {: RESULT = new NullExpr(); :}
        | NODE LPAREN string:n RPAREN
@@ -62,7 +67,7 @@ node ::= VAR:v
        ;
 /* todo : add support for litterals */
 
-double ::= LPAREN string:s COMMA node:n RPAREN
+double ::= LPAREN prop:s COMMA node:n RPAREN
         {: RESULT = new DoubleExpr(s,n); :}
         ;
 
@@ -75,7 +80,7 @@ double_list ::= double_list:t PLUS double:e
                RESULT = l; :}
             ;
 
-triple ::= LPAREN node:n COMMA string:p COMMA node:o RPAREN
+triple ::= LPAREN node:n COMMA prop:p COMMA node:o RPAREN
            {: RESULT = new TripleExpr(n,p,o); :}
            ;
 
@@ -83,15 +88,19 @@ string ::= NAME
            {: RESULT = name; :}
          | STR:s
            {: RESULT = s; :}
+          ;
+
+prop  ::= string:s
+           {: RESULT = new CstExpr(s); :}
+         | REL node:v
+           {: RESULT = new RelExpr(v); :}
            ;
-/* todo : add support for litterals */
 
 stype ::= IDENT:i COLON
           {: RESULT = new SimpleType(i,0); :}
         | IDENT:i LPAREN exp:e RPAREN COLON
           {: RESULT = new SimpleType(i,e); :}
         ;
-/* TODO : fix design issue (comparison of types) */
 
 exp ::= EXPL:e {: RESULT = -e; :}
       | EXPR:e {: RESULT = e; :};

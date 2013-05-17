@@ -54,6 +54,9 @@ expr = r+
 ";"             { return symbol(sym.SEP); }
 "["             { return symbol(sym.LCRO); }
 "]"             { return symbol(sym.RCRO); }
+"sub"           { return symbol(sym.SUB); }
+"rel"           { return symbol(sym.REL); }
+"obj"           { return symbol(sym.OBJ); }
 "+"             { return symbol(sym.PLUS); }
 ":"             { return symbol(sym.COLON); }
 "null"          { return symbol(sym.NULL); }

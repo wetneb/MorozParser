@@ -56,7 +56,8 @@ public class App {
 				out = new PrintWriter("output.tex");
 				out.println(TikzReduction.draw(phrase, sentence, p.getReduction()));
 				out.close();
-			} catch (FileNotFoundException e) {
+			} catch (FileNotFoundException e)
+			{
 				e.printStackTrace();
 			}
 		}
