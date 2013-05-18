@@ -26,11 +26,14 @@ import tagging.StanfordTagger;
 public class App {
 	public static void main(String[] args)
 	{	
+		org.apache.jena.atlas.logging.Log.setLog4j();
+		
 		SemanticLexicon sem = new SemanticLexicon();
 		sem.load("semantics.xml");
 		//lex.loadTagger();
 		
-		String input = "John loves a sweet girl";
+		String input = "John loves a who sweet girl";
+
 		
 		List<String> sentence = new SimpleTokenizer(input).toList();
 		
