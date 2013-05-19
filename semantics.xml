@@ -31,7 +31,7 @@
             <type>d : null; n : fresh_node</type>
         </entry>
         <entry form="WP">
-        	<type>n(r) : 1; n : [1+("NAME",null)]; s(l) : 2; n : 1</type>
+        	<type>n(r) : 1; n : [1+(rel(2),obj(2))]; s(l) : 2; n : 1</type>
         </entry>
     </entries>    
 </lexicon>

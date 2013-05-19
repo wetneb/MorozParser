@@ -44,6 +44,7 @@ public class GraphString extends PhraseString
 	
 	public GraphString(List<List<List<GraphExpr>>> lst, List<String> sen, TypeString target)
 	{
+		//! TODO : REDESIGN THIS CLASS, there's too much mess in it
 		patterns = new HashMap<Integer, PatternExpr>();
 		int widx = 0;
 		for(List<List<GraphExpr>> candidates : lst)
@@ -60,7 +61,7 @@ public class GraphString extends PhraseString
 				for(GraphExpr ge : type)
 				{
 					PatternExpr p = ge.pattern;
-					if(p.isNode())
+					if(p.isNode() && !ge.type.isProductive())
 					{
 						NodeExpr n = (NodeExpr)p;
 						if(n.isVar())

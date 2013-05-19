@@ -28,7 +28,7 @@ public class SimpleType
 	//! Left adjoint of the type
 	public SimpleType left()
 	{
-		SimpleType adj = this;
+		SimpleType adj = new SimpleType(base, exp);
 		adj.exp--;
 		return adj;
 	}
@@ -36,9 +36,14 @@ public class SimpleType
 	//! Right adjoint of the type
 	public SimpleType right()
 	{
-		SimpleType adj = this;
+		SimpleType adj = new SimpleType(base, exp);
 		adj.exp++;
 		return adj;
+	}
+	
+	public boolean isProductive()
+	{
+		return (exp % 2 == 0);
 	}
 	
 	public String toString()

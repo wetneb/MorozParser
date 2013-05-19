@@ -46,9 +46,9 @@ pattern ::= node:n
 
 node ::= VAR:v
        {: RESULT = new VarExpr(v); :}
-       | SUB node:v
+       | SUB LPAREN node:v RPAREN
        {: RESULT = new SubExpr(v); :}
-       | OBJ node:v
+       | OBJ LPAREN node:v RPAREN
        {: RESULT = new ObjExpr(v); :}
        | NULL
        {: RESULT = new NullExpr(); :}
@@ -84,7 +84,7 @@ string ::= STR:s
 
 prop  ::= string:s
            {: RESULT = new CstExpr(s); :}
-         | REL node:v
+         | REL LPAREN node:v RPAREN
            {: RESULT = new RelExpr(v); :}
            ;
 
