@@ -1,5 +1,6 @@
 package rdf;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +34,13 @@ public class GraphCompiler
 		nullNode = model.createResource("null");
 	}
 	
-	public void dumpTriples()
+	public String dumpTriples()
 	{
-		model.write(System.out, "N-TRIPLES");
+		StringWriter writer = new StringWriter();
+		model.write(writer, "N-TRIPLES");
+		String res = writer.toString();
+		System.out.println(res);
+		return res;
 	}
 	
 	public void assume(Statement stmt)

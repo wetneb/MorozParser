@@ -16,7 +16,7 @@ public class StanfordTagger
 		
 	}
 	
-	public void loadTagger(String path)
+	public void load(String path)
 	{
 		tagger = new MaxentTagger(path);
 	}

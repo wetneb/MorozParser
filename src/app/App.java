@@ -12,6 +12,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 
 import latex.TikzReduction;
 
+import xmllexicon.InputException;
 import xmllexicon.SemanticLexicon;
 import xmllexicon.TagLexicon;
 import xmllexicon.XmlLexicon;
@@ -32,7 +33,7 @@ public class App {
 		sem.load("semantics.xml");
 		//lex.loadTagger();
 		
-		String input = "John loves a who sweet girl";
+		String input = "John loves Mary who loves Peter";
 
 		
 		List<String> sentence = new SimpleTokenizer(input).toList();
@@ -41,41 +42,50 @@ public class App {
 				new SimpleType("s", 0);
 		
 		StanfordTagger tagger = new StanfordTagger();
-		tagger.loadTagger("taggers/english-left3words-distsim.tagger");
+		tagger.load("taggers/english-left3words-distsim.tagger");
 		
-		GraphString phrase =
-				new GraphString(sem, tagger.tagSentence(sentence), sentence, target);
-		
-		Parser p = new Parser(phrase, sem.getComparator());
-		System.out.println(phrase.toString());
-		if(p.run())
+		try
 		{
-			System.out.println("Valid sentence.");
-			PrintWriter out;
-			try {
-				ExprResolver resolver = new ExprResolver(phrase, p.getReduction());
-				GraphCompiler compiler = new GraphCompiler(resolver);
-				// TODO
-				try {
-					Statement res = compiler.compileStmt(phrase.getPattern(resolver.getEntryPoint()));
-					compiler.assume(res);
-					
-					System.out.println("## OUTPUT ##");
-					compiler.dumpTriples();
-				} catch (TypeException e) {
-					System.out.println(e.what);
-				}
-				
-				out = new PrintWriter("output.tex");
-				out.println(TikzReduction.draw(phrase, sentence, p.getReduction()));
-				out.close();
-			} catch (FileNotFoundException e)
+			GraphString phrase =
+					new GraphString(sem, tagger.tagSentence(sentence), sentence, target);
+			
+			Parser p = new Parser(phrase, sem.getComparator());
+			System.out.println(phrase.toString());
+			if(p.run())
 			{
-				e.printStackTrace();
+				System.out.println("Valid sentence.");
+				PrintWriter out;
+				try {
+					ExprResolver resolver = new ExprResolver(phrase, p.getReduction());
+					GraphCompiler compiler = new GraphCompiler(resolver);
+					// TODO
+					/*
+					try {
+						/*
+						Statement res = compiler.compileStmt(phrase.getPattern(resolver.getEntryPoint()));
+						compiler.assume(res);
+						
+						System.out.println("## OUTPUT ##");
+						System.out.println(compiler.dumpTriples());
+					} catch (TypeException e) {
+						System.out.println(e.what);
+					}*/
+					
+					out = new PrintWriter("output.tex");
+					out.println(TikzReduction.draw(phrase, sentence, p.getReduction()));
+					out.close();
+				} catch (FileNotFoundException e)
+				{
+					e.printStackTrace();
+				}
 			}
+			else
+				System.out.println("Invalid sentence.");
 		}
-		else
-			System.out.println("Invalid sentence.");
+		catch(InputException e)
+		{
+			System.out.println("Invalid input sentence:\n"+e.what);
+		}
 		
 	}
 }

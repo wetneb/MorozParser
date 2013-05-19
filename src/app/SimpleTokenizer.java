@@ -15,7 +15,7 @@ import java.io.IOException;
  * on 08/05/13 09:46 from the specification file
  * <tt>tokenizer.flex</tt>
  */
-class SimpleTokenizer {
+public class SimpleTokenizer {
 
   /** This character denotes the end of file */
   public static final int YYEOF = -1;

@@ -30,5 +30,8 @@
         <entry form="DT">
             <type>d : null; n : fresh_node</type>
         </entry>
+        <entry form="WP">
+        	<type>n(r) : 1; n : [1+("NAME",null)]; s(l) : 2; n : 1</type>
+        </entry>
     </entries>    
 </lexicon>

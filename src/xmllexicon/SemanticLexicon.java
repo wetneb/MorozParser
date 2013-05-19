@@ -36,7 +36,7 @@ public class SemanticLexicon
 		return res;
 	}
 	
-	public List<List<List<GraphExpr>>> graphExprs(List<String> tags)
+	public List<List<List<GraphExpr>>> graphExprs(List<String> tags) throws InputException
 	{
 		List<List<List<GraphExpr>>> res = new ArrayList<List<List<GraphExpr>>>();
 		
@@ -44,7 +44,7 @@ public class SemanticLexicon
 		{
 			List<List<GraphExpr>> l = get(tag);
 
-			if(l != null)
+			if(l != null && !l.isEmpty())
 			{
 				List<List<GraphExpr>> cloned = new ArrayList<List<GraphExpr>>();
 				for(List<GraphExpr> l1 :l)
@@ -56,7 +56,8 @@ public class SemanticLexicon
 				}
 				res.add(cloned);
 			}
-			// TODO THROW AN EXCEPTION otherwise
+			else
+				throw new InputException("Unknown tag : \""+tag+"\"");
 		}
 		
 		return res;
