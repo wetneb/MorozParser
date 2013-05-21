@@ -48,12 +48,14 @@ rel_int = 0|(-?[1-9][0-9]*)
 
 word = [A-Za-z_]*
 
+punctuation = [\.,\?!]
 
 %%
 
 
 <YYINITIAL> {
 {word}    { return yytext(); }
+{punctuation}		  { return yytext(); }
 {WhiteSpace}    { /* ignore */ }
 }
 

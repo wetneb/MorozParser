@@ -5,33 +5,36 @@
         <rel smaller="i" greater="j" />
     </relations>
     <entries>
+    	<entry form=".">
+    		<type>\1 : "null"</type>
+    	</entry>
         <entry form="JJ">
-            <type>n : [1+("isNAME",null)] ; n(l) : 1</type>
-            <type>n(r) : 1 ; n : [1+("isNAME",null)]</type>
+            <type>n : qlify((n1,"isNAME","true")) ; n(l) : n1</type>
+            <type>n(r) : n1 ; n : qlify((n1,"is_NAME","true"))</type>
         </entry>
         <entry form="NNS">
             <type>n : node("NAME")</type>
         </entry>
         <entry form="NN">
             <type>n : node("NAME")</type>
-            <type>n(r) : 1; d(r) : 2; n : [1+("rdf:type",node("NAME"))] </type>
+            <type>n(r) : n1; d(r) : n2; n : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
         <entry form="NNP">
             <type>n : node("NAME")</type>
         </entry>
         <entry form="VBP">
-            <type>n(r) : 1; s : (1,"NAME",2); n(l) : 2</type>
-            <type>n(r) : 1; s : (1,"NAME",null)</type>
+            <type>n(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
+            <type>n(r) : n1; s : (n1,"NAME","true")</type>
         </entry>
         <entry form="VBZ">
-            <type>n(r) : 1; s : (1,"NAME",2); n(l) : 2</type>
-            <type>n(r) : 1; s : (1,"NAME",null)</type>
+            <type>n(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
+            <type>n(r) : n1; s : (n1,"NAME","null")</type>
         </entry>
         <entry form="DT">
-            <type>d : null; n : fresh_node</type>
+            <type>d : "null"; n : fresh_node</type>
         </entry>
         <entry form="WP">
-        	<type>n(r) : 1; n : [1+(rel(2),obj(2))]; s(l) : 2; n : 1</type>
+        	<type>n(r) : n1; n : qlify(s2); s(l) : s2; n : n1</type>
         </entry>
     </entries>    
 </lexicon>

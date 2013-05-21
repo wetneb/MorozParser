@@ -22,11 +22,11 @@ public class TikzReduction {
 	//! Vertical space between the types and the links below them
 	private static final double distToTypes = 0.25;
 	//! Horizontal space between two simple types in the same word
-	private static final double typeSpacing = 0.6;
+	private static final double typeSpacing = 0.4;
 	//! Horizontal space between the types of two words
-	private static final double wordSpacing = 1.7;
+	private static final double wordSpacing = 1.1;
 	//! Vertical space between the original words and their types
-	private static final double textDistance = 0.6;
+	private static final double textDistance = 0.5;
 	
 	public static String draw(PhraseString phrase, List<String> words, TypeReduction red)
 	{
@@ -60,7 +60,7 @@ public class TikzReduction {
 				output += "\\node at ("+curPos+",0) (t"+i+") {$"+phrase.get(i).toLatex()+"$};\n";
 				curPos += typeSpacing;
 			}
-			else if(phrase.get(i).isRB())
+			else if(phrase.get(i).isRB() && nbTypes > 0)
 			{
 				output += "\\node at ("+(sumPos/nbTypes)+","+textDistance+") (w"+curWord+") {"+words.get(curWord)+"};\n";
 				curWord++;

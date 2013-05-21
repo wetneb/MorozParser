@@ -32,9 +32,12 @@ import java.io.StringReader;
 LineTerminator = \r|\n|\r\n
 WhiteSpace = {LineTerminator} | [ \t\f]
 
-var = 0|([1-9][0-9]*)
+integer = 0|([1-9][0-9]*)
 
-ident = [\\A-Za-z_][\\A-Za-z_0-9]*
+node_var = n{integer}
+stmt_var = s{integer}
+
+ident = [\\A-Za-z][A-Za-z_0-9]*
 expl = l+
 expr = r+
 
@@ -46,21 +49,22 @@ expr = r+
 <YYINITIAL> {
 "fresh_node"    { return symbol(sym.NODE_FRESH); }
 "node"          { return symbol(sym.NODE); }
-{var}           { return symbol(sym.VAR, Integer.parseInt(yytext())); }
+{node_var}      { return symbol(sym.NODE_VAR, Integer.parseInt(yytext().substring(1,yytext().length()))); }
+{stmt_var}      { return symbol(sym.STMT_VAR, Integer.parseInt(yytext().substring(1,yytext().length()))); }
 "("             { return symbol(sym.LPAREN); }
 ")"             { return symbol(sym.RPAREN); }
 ","             { return symbol(sym.COMMA); }
 ";"             { return symbol(sym.SEP); }
-"["             { return symbol(sym.LCRO); }
-"]"             { return symbol(sym.RCRO); }
-"sub"           { return symbol(sym.SUB); }
-"rel"           { return symbol(sym.REL); }
-"obj"           { return symbol(sym.OBJ); }
-"+"             { return symbol(sym.PLUS); }
+"qlify"         { return symbol(sym.ALPHA); }
+"reify"         { return symbol(sym.BETA); }
 ":"             { return symbol(sym.COLON); }
-"null"          { return symbol(sym.NULL); }
-{expl}          { return symbol(sym.EXPL, yytext().length()); }
-{expr}          { return symbol(sym.EXPR, yytext().length()); }
+{expl}          { if(yytext().length() % 2 == 0)
+					return symbol(sym.EXP_EVEN, -yytext().length());
+				  else return symbol(sym.EXP_ODD, -yytext().length()); }
+{expr}          { if(yytext().length() % 2 == 0)
+					return symbol(sym.EXP_EVEN, yytext().length());
+			      else return symbol(sym.EXP_ODD, yytext().length()); }
+"\\1"			{ return symbol(sym.IDENT, "1"); }
 {ident}         { return symbol(sym.IDENT, yytext()); }
 "\""            { string.setLength(0); yybegin(STRING); }
 {WhiteSpace}    { /* ignore */ }

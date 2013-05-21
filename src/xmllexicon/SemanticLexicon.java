@@ -32,7 +32,7 @@ public class SemanticLexicon
 	{
 		TypeString res = new TypeString();
 		for(GraphExpr g : l)
-			res.add(g.type);
+			res.add(g.getType());
 		return res;
 	}
 	

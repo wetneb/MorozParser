@@ -2,12 +2,14 @@ package graphexpr;
 
 import java.util.HashMap;
 
+import util.NotFoundException;
+
 public abstract class PatternExpr implements Cloneable
 {
 	public boolean isNode() { return (this instanceof NodeExpr); }
-	public boolean isTriple() { return (this instanceof TripleExpr); }
+	public boolean isStmt() { return (this instanceof StmtExpr); }
 	
-	public abstract void shift(HashMap<Integer,Integer> map, String name);
+	public abstract void shift(HashMap<Integer,Integer> map, String name) throws NotFoundException;
 	
 	public abstract Object clone();
 	

@@ -33,7 +33,7 @@ public class App {
 		sem.load("semantics.xml");
 		//lex.loadTagger();
 		
-		String input = "John loves Mary who loves Peter";
+		String input = "John loves Mary who loves Peter.";
 
 		
 		List<String> sentence = new SimpleTokenizer(input).toList();
@@ -85,6 +85,10 @@ public class App {
 		catch(InputException e)
 		{
 			System.out.println("Invalid input sentence:\n"+e.what);
+		}
+		catch(TypeException e)
+		{
+			System.out.println("Type exception:\n"+e.what);
 		}
 		
 	}

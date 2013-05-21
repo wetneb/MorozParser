@@ -13,7 +13,7 @@ public class SimpleType
 	
 	public boolean isUnit()
 	{
-		return base == "1";
+		return base.equals("1");
 	}
 	
 	//! Generalized Contraction rule

@@ -7,22 +7,20 @@ import java.util.ArrayList;
 import pregroup.SimpleType;
 
 /* Terminals */
-terminal    NODE_FRESH, NODE, LPAREN, RPAREN, COMMA, SEP, LCRO, RCRO, PLUS, NULL, COLON, SUB, REL, OBJ;
+terminal    NODE_FRESH, NODE, LPAREN, RPAREN, COMMA, SEP, COLON, ALPHA, BETA;
 terminal String IDENT, STR;
-terminal Integer VAR, EXPR, EXPL;
+terminal Integer NODE_VAR, STMT_VAR, EXP_ODD, EXP_EVEN;
 
 /* Non-terminals */
 non terminal List<GraphExpr>   expr_list;
 non terminal PatternExpr pattern;
 non terminal GraphExpr expr;
-non terminal List<DoubleExpr> double_list;
 non terminal NodeExpr node;
 non terminal String string;
-non terminal TripleExpr triple;
-non terminal DoubleExpr double;
-non terminal PropExpr prop;
-non terminal SimpleType stype;
-non terminal Integer exp;
+non terminal StmtExpr triple;
+non terminal SimpleType producer_type;
+non terminal SimpleType consumer_type;
+non terminal Integer var;
 
 /* The grammar */
 expr_list ::= expr_list:l SEP expr:e
@@ -34,9 +32,17 @@ expr_list ::= expr_list:l SEP expr:e
                RESULT = l; :}
             ;
 
-expr ::= stype:st pattern:p
-        {: RESULT = new GraphExpr(st,p); :}
-        ;
+expr ::= producer_type:t pattern:p
+		{: RESULT = new ProducerExpr(t,p); :}
+	   | consumer_type:t var:v
+	    {: RESULT = new ConsumerExpr(t,v); :}
+	    ;
+	  
+var ::= NODE_VAR:v
+		{: RESULT = v; :}
+	   | STMT_VAR:v
+	    {: RESULT = v; :}
+	    ;
 
 pattern ::= node:n
        {: RESULT = n; :}
@@ -44,56 +50,39 @@ pattern ::= node:n
        {: RESULT = t; :}
        ;
 
-node ::= VAR:v
-       {: RESULT = new VarExpr(v); :}
-       | SUB LPAREN node:v RPAREN
-       {: RESULT = new SubExpr(v); :}
-       | OBJ LPAREN node:v RPAREN
-       {: RESULT = new ObjExpr(v); :}
-       | NULL
-       {: RESULT = new NullExpr(); :}
+node ::= NODE_VAR:v
+       {: RESULT = new NodeVarExpr(v); :}
        | NODE LPAREN string:n RPAREN
        {: RESULT = new NamedNodeExpr(n); :}
+       | string:s
+       {: RESULT = new LiteralExpr(s); :}
        | NODE_FRESH
        {: RESULT = new FreshExpr(); :}
-       | LCRO node:n PLUS double_list:l RCRO
-       {: RESULT = new PlusExpr(n,l); :}
+       | ALPHA LPAREN triple:t RPAREN
+       {: RESULT = new MorphExpr(false, t); :}
+       | BETA LPAREN triple:t RPAREN
+       {: RESULT = new MorphExpr(true, t); :}
        ;
-/* todo : add support for literals */
 
-double ::= LPAREN prop:s COMMA node:n RPAREN
-        {: RESULT = new DoubleExpr(s,n); :}
-        ;
-
-double_list ::= double_list:t PLUS double:e
-            {: t.add(e);
-               RESULT = t; :}
-            | double:e
-            {: List<DoubleExpr> l = new ArrayList<DoubleExpr>();
-               l.add(e);
-               RESULT = l; :}
-            ;
-
-triple ::= LPAREN node:n COMMA prop:p COMMA node:o RPAREN
+triple ::= LPAREN node:n COMMA node:p COMMA node:o RPAREN
            {: RESULT = new TripleExpr(n,p,o); :}
+           | STMT_VAR:v
+           {: RESULT = new TripleVarExpr(v); :}
            ;
 
 string ::= STR:s
            {: RESULT = s; :}
           ;
 
-prop  ::= string:s
-           {: RESULT = new CstExpr(s); :}
-         | REL LPAREN node:v RPAREN
-           {: RESULT = new RelExpr(v); :}
-           ;
+producer_type ::= IDENT:i COLON
+		{: RESULT = new SimpleType(i,0); :}
+		| IDENT:i LPAREN EXP_EVEN:e RPAREN COLON
+		{: RESULT = new SimpleType(i,e); :}
+		;
+		
+consumer_type ::= IDENT:i LPAREN EXP_ODD:e RPAREN COLON
+		{: RESULT = new SimpleType(i,e); :}
+		;
 
-stype ::= IDENT:i COLON
-          {: RESULT = new SimpleType(i,0); :}
-        | IDENT:i LPAREN exp:e RPAREN COLON
-          {: RESULT = new SimpleType(i,e); :}
-        ;
 
-exp ::= EXPL:e {: RESULT = -e; :}
-      | EXPR:e {: RESULT = e; :};
 
