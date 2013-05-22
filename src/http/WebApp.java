@@ -37,6 +37,9 @@ import rdf.GraphCompiler;
 import rdf.GraphString;
 import rdf.TypeException;
 import tagging.StanfordTagger;
+import util.InternalException;
+import util.TokenizerException;
+import util.UnknownTagException;
 import xmllexicon.InputException;
 import xmllexicon.SemanticLexicon;
 
@@ -51,7 +54,10 @@ public class WebApp implements Container
 {
 	private String homePage;
 	private String resultPage;
-	
+	private String thatsMyFault;
+	private String notSupported;
+	private String tokenError;
+			
 	private final static Integer port = 4040;
 	//private String errorPage;
 	
@@ -88,6 +94,7 @@ public class WebApp implements Container
 		}
 		catch (Exception e)
 		{
+			System.out.println("Exception caught in handle():");
 			e.printStackTrace();
 		}
 		
@@ -104,7 +111,8 @@ public class WebApp implements Container
 	private String processSentence(String input)
 	{
 		String resPage = new String(resultPage);
-		//String errPage = new String(errorPage);
+
+		System.out.println("Input sentence: "+input);
 		
 		String messages = "";
 		
@@ -122,12 +130,13 @@ public class WebApp implements Container
 			{
 				List<String> sentence;
 				try
-				{ sentence = new SimpleTokenizer(input).toList(); }
+				{ sentence = new SimpleTokenizer(input).toList();
+				}
 				catch(Exception e)
 				{
-					throw new UserInputError("Unable to tokenize the input sentence.");
+					throw new UserInputError("Unable to tokenize the input sentence."+tokenError);
 				}
-				//! TODO improve this tokenizer, handle errors
+				
 				SimpleType target =
 						new SimpleType("s", 0);
 				
@@ -151,16 +160,17 @@ public class WebApp implements Container
 				{ phrase =new  GraphString(sem, tags, sentence, target);
 				} catch(TypeException e)
 				{
-					throw new UserInputError(e.what);
+					throw new UserInputError(e.what+thatsMyFault);
 				}
 				
 				Parser p = new Parser(phrase, sem.getComparator());
 				System.out.println(phrase.toString());
-				messages += "<h5>Type reduction</h5>\n"+
-							"<img alt=\"Type reduction\" src=\"tmp/img/output.png\" />\n\n";
+
 				if(p.run())
 				{
 					genImage(TikzReduction.draw(phrase, sentence, p.getReduction()));
+					messages += "<h5>Type reduction</h5>\n"+
+							"<img alt=\"Type reduction\" src=\"tmp/img/output.png\" />\n\n";
 					
 					ExprResolver resolver = new ExprResolver(phrase, p.getReduction());
 					GraphCompiler compiler = new GraphCompiler(resolver);
@@ -182,9 +192,9 @@ public class WebApp implements Container
 				else
 					throw new UserInputError("Incorrect sentence.");
 			}
-			catch(InputException e)
+			catch(UnknownTagException e)
 			{
-				throw new UserInputError("Invalid input sentence:<br/>"+e.what);
+				throw new UserInputError("Unknown tag: "+e.what+notSupported);
 			}
 		}
 		catch(UserInputError e)
@@ -193,9 +203,10 @@ public class WebApp implements Container
 		}
 		catch(Exception e)
 		{
+			System.out.println("Exception caught in processSentence():");
 			e.printStackTrace();
 		}
-		
+
 		resPage = resPage.replace("$OUTPUT", messages);
 		return resPage;
 	}
@@ -243,13 +254,15 @@ public class WebApp implements Container
 		return "";
 	}
 	
-	public WebApp()
+	public WebApp() throws InternalException
 	{
 		super();
 		try
 		{
 			homePage = readFile("www/index.html");
-			//errorPage = readFile("www/error.html");
+			thatsMyFault = readFile("www/thatsMyFault.html");
+			notSupported = readFile("www/notSupported.html");
+			tokenError = readFile("www/tokenError.html");
 			resultPage = readFile("www/process.html");
 		}
 		catch(IOException e)
@@ -260,6 +273,7 @@ public class WebApp implements Container
 		org.apache.jena.atlas.logging.Log.setLog4j();
 		
 		sem = new SemanticLexicon();
+
 		sem.load("semantics.xml");
 		
 		tagger = new StanfordTagger();
@@ -268,13 +282,17 @@ public class WebApp implements Container
 	
 	public static void main(String[] list) throws Exception
 	{
+		try {
 	      Container container = new WebApp();
 	      Server server = new ContainerServer(container);
 	      Connection connection = new SocketConnection(server);
 	      SocketAddress address = new InetSocketAddress(port);
 
 	      connection.connect(address);
-	      
+		} catch(InternalException e)
+		{
+			System.err.println(e.what);
+		}
 	}
 
 	private String readFile( String file ) throws IOException {

@@ -19,6 +19,9 @@
             <type>n : node("NAME")</type>
             <type>n(r) : n1; d(r) : n2; n : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
+        <entry form="PRP">
+        	<type>n : node("NAME")</type>
+        </entry>
         <entry form="NNP">
             <type>n : node("NAME")</type>
         </entry>

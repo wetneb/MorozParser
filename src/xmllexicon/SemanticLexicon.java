@@ -18,6 +18,8 @@ import javax.xml.bind.Unmarshaller;
 import pregroup.Lexicon;
 import pregroup.PartialComparator;
 import pregroup.TypeString;
+import util.InternalException;
+import util.UnknownTagException;
 
 
 public class SemanticLexicon
@@ -36,7 +38,7 @@ public class SemanticLexicon
 		return res;
 	}
 	
-	public List<List<List<GraphExpr>>> graphExprs(List<String> tags) throws InputException
+	public List<List<List<GraphExpr>>> graphExprs(List<String> tags) throws UnknownTagException
 	{
 		List<List<List<GraphExpr>>> res = new ArrayList<List<List<GraphExpr>>>();
 		
@@ -57,7 +59,7 @@ public class SemanticLexicon
 				res.add(cloned);
 			}
 			else
-				throw new InputException("Unknown tag : \""+tag+"\"");
+				throw new UnknownTagException(tag);
 		}
 		
 		return res;
@@ -82,7 +84,7 @@ public class SemanticLexicon
 		return res;
 	}
 	
-	public void load(String filename)
+	public void load(String filename) throws InternalException
 	{
 		try {
 		JAXBContext jaxbContext;
@@ -95,31 +97,36 @@ public class SemanticLexicon
 		RawLexicon rl = (RawLexicon)lexicon.getValue();
 		Entries entries = rl.getEntries();
 		rels = rl.getRelations();
-		//! TODO : if rels == null…
+		if(rels == null)
+			rels = new TypeRelations();
 		
-		//! TODO : add error handling ! (if entries.getEntry() is null (when there's no <entries>)
-		for(EntryType ent : entries.getEntry()) {
-			String form = ent.getForm();
-			List<String> rawTypes = ent.getType();
-			List<List<GraphExpr>> res = new ArrayList<List<GraphExpr>>();
-			
-			for(String rt : rawTypes)
-			{
-				GraphExprLexer lexer = new GraphExprLexer(rt);
-				GraphExprParser parser = new GraphExprParser(lexer);
-				try {
-					java_cup.runtime.Symbol s = parser.parse();
-					if(s.value != null)
-						res.add((List<GraphExpr>)(s.value));
-				} catch (Exception e) {
-					System.err.println("Unable to parse the following type:");
-					System.err.println(rt);
-					//! TODO throw an exception here
+		if(entries.getEntry() != null)
+		{
+			for(EntryType ent : entries.getEntry()) {
+				String form = ent.getForm();
+				List<String> rawTypes = ent.getType();
+				List<List<GraphExpr>> res = new ArrayList<List<GraphExpr>>();
+				
+				for(String rt : rawTypes)
+				{
+					GraphExprLexer lexer = new GraphExprLexer(rt);
+					GraphExprParser parser = new GraphExprParser(lexer);
+					
+					java_cup.runtime.Symbol s;
+					try {
+						s = parser.parse();
+						if(s.value != null)
+							res.add((List<GraphExpr>)(s.value));
+					}
+					catch (Exception e) {
+						throw new InternalException("Unable to parse the following type: "+rt);
+					}
 				}
+				
+				put(form, res);
 			}
-			
-			put(form, res);
 		}
+		else System.err.println("Warning, the lexicon loaded has no <entries> section.");
 		
 		} catch (JAXBException je) {
 			je.printStackTrace();

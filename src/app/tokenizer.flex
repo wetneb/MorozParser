@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.StringReader;
 import java.io.IOException;
+import util.TokenizerException;
 
 %%
 
@@ -18,25 +19,21 @@ import java.io.IOException;
 %eofval}
 
 %{
-	public SimpleTokenizer(String input)
+	public SimpleTokenizer(String input) throws IOException
 	{
 		this(new StringReader(input));
 	}
 	
-	public List<String> toList()
+	public List<String> toList() throws IOException
 	{
 	    List<String> sentence = new ArrayList<String>();
-		try {
-			String token = yylex();
-			while(token != null)
-			{
-				sentence.add(token);
-				token = yylex();
-			}
-		} catch(IOException e)
+		String token = yylex();
+		while(token != null)
 		{
-			e.printStackTrace();
+			sentence.add(token);
+			token = yylex();
 		}
+
 		return sentence;
 	}
 %}
@@ -44,11 +41,9 @@ import java.io.IOException;
 LineTerminator = \r|\n|\r\n
 WhiteSpace = {LineTerminator} | [ \t\f]
 
-rel_int = 0|(-?[1-9][0-9]*)
+word = [0-9A-Za-z]*
 
-word = [A-Za-z_]*
-
-punctuation = [\.,\?!]
+punctuation = [\.,\?!\']
 
 %%
 
@@ -57,5 +52,6 @@ punctuation = [\.,\?!]
 {word}    { return yytext(); }
 {punctuation}		  { return yytext(); }
 {WhiteSpace}    { /* ignore */ }
+!([0-9A-Za-z\.,\?!\'\r\n ]*)	{ throw new TokenizerException(yytext()); }
 }
 

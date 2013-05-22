@@ -3,8 +3,6 @@ package rdf;
 import graphexpr.ConsumerExpr;
 import graphexpr.GraphExpr;
 import graphexpr.PatternExpr;
-import graphexpr.NodeExpr;
-import graphexpr.NodeVarExpr;
 import graphexpr.ProducerExpr;
 
 import java.util.HashMap;
@@ -14,6 +12,7 @@ import pregroup.PhraseString;
 import pregroup.SimpleType;
 import pregroup.TypeString;
 import util.NotFoundException;
+import util.UnknownTagException;
 import xmllexicon.InputException;
 import xmllexicon.SemanticLexicon;
 
@@ -23,12 +22,12 @@ public class GraphString extends PhraseString
 	
 	private HashMap<Integer, PatternExpr> patterns;
 
-	public GraphString(SemanticLexicon lex, List<String> lst, List<String> sen, TypeString target) throws InputException, TypeException
+	public GraphString(SemanticLexicon lex, List<String> lst, List<String> sen, TypeString target) throws UnknownTagException, TypeException
 	{
 		this(lex.graphExprs(lst), sen, target);
 	}
 	
-	public GraphString(SemanticLexicon lex, List<String> lst, List<String> sen, SimpleType target) throws InputException, TypeException
+	public GraphString(SemanticLexicon lex, List<String> lst, List<String> sen, SimpleType target) throws UnknownTagException, TypeException
 	{
 		this(lex.graphExprs(lst), sen, new TypeString(target));
 	}
