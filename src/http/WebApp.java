@@ -57,6 +57,7 @@ public class WebApp implements Container
 	private String thatsMyFault;
 	private String notSupported;
 	private String tokenError;
+	private String seemsIncorrect;
 			
 	private final static Integer port = 4040;
 	//private String errorPage;
@@ -185,12 +186,12 @@ public class WebApp implements Container
 								    escapeHtml(graph)+
 								    "\n</pre>\n\n";
 					} catch (TypeException e) {
-						throw new UserInputError("Type exception in the grammar:<br/>"+e.what);
+						throw new UserInputError("Type exception in the grammar:<br/>"+e.what+thatsMyFault);
 					}
 						
 				}
 				else
-					throw new UserInputError("Incorrect sentence.");
+					throw new UserInputError("Incorrect sentence."+seemsIncorrect);
 			}
 			catch(UnknownTagException e)
 			{
@@ -264,6 +265,7 @@ public class WebApp implements Container
 			notSupported = readFile("www/notSupported.html");
 			tokenError = readFile("www/tokenError.html");
 			resultPage = readFile("www/process.html");
+			seemsIncorrect = readFile("www/seemsIncorrect.html");
 		}
 		catch(IOException e)
 		{
