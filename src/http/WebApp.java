@@ -16,6 +16,7 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import latex.TikzGraphExpr;
 import latex.TikzReduction;
 
 import org.simpleframework.http.Request;
@@ -38,9 +39,7 @@ import rdf.GraphString;
 import rdf.TypeException;
 import tagging.StanfordTagger;
 import util.InternalException;
-import util.TokenizerException;
 import util.UnknownTagException;
-import xmllexicon.InputException;
 import xmllexicon.SemanticLexicon;
 
 class UserInputError extends Exception
@@ -83,6 +82,8 @@ public class WebApp implements Container
 				body.println(homePage);
 			else if(pageName.equals("/process.html"))
 				body.println(processSentence(request.getQuery().get("sentence")));
+			else if(pageName.equals("/reload"))
+				sem.load("semantics.xml");
 			else if(pageName.startsWith("/tmp/img/"))
 			{
 				//! TODO THIS IS A BACKDOOOOOOOOR
@@ -125,14 +126,13 @@ public class WebApp implements Container
 				throw new UserInputError("No input sentence.");
 			}
 			
-			resPage = resPage.replace("$SENTENCE", "Sentence: \""+input+"\"\n<br/>\n");
+			resPage = resPage.replace("$SENTENCE", escapeHtml(input));
 			
 			try
 			{
 				List<String> sentence;
 				try
-				{ sentence = new SimpleTokenizer(input).toList();
-				}
+				{ sentence = new SimpleTokenizer(input).toList(); }
 				catch(Exception e)
 				{
 					throw new UserInputError("Unable to tokenize the input sentence."+tokenError);
@@ -169,11 +169,12 @@ public class WebApp implements Container
 
 				if(p.run())
 				{
-					genImage(TikzReduction.draw(phrase, sentence, p.getReduction()));
+					ExprResolver resolver = new ExprResolver(phrase, p.getReduction());
+					
+					genImage(TikzGraphExpr.draw(phrase, sentence, p.getReduction(),resolver));
 					messages += "<h5>Type reduction</h5>\n"+
 							"<img alt=\"Type reduction\" src=\"tmp/img/output.png\" />\n\n";
 					
-					ExprResolver resolver = new ExprResolver(phrase, p.getReduction());
 					GraphCompiler compiler = new GraphCompiler(resolver);
 	
 					try {

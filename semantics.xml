@@ -8,36 +8,92 @@
     	<entry form=".">
     		<type>\1 : "null"</type>
     	</entry>
-        <entry form="JJ">
+        <entry form="CC"><!-- Coordinating conjuction -->
+        </entry>
+        <entry form="CD"><!-- Cardinal number -->
+        </entry>
+        <entry form="DT"><!-- Determiner -->
+            <type>d : "null"; n : fresh_node</type>
+        </entry>
+        <entry form="EX"><!-- Existential /there/ -->
+        </entry>
+        <entry form="FW"><!-- Foreign word -->
+        </entry>
+        <entry form="IN"><!-- Preposition or subordinating conjunction -->
+        </entry>
+        <entry form="JJ"><!-- Adjective -->
             <type>n : qlify((n1,"isNAME","true")) ; n(l) : n1</type>
             <type>n(r) : n1 ; n : qlify((n1,"is_NAME","true"))</type>
         </entry>
-        <entry form="NNS">
-            <type>n : node("NAME")</type>
+        <entry form="JJR"><!-- Adjective, comparative -->
         </entry>
-        <entry form="NN">
+        <entry form="JJS"><!-- Adjective, superlative -->
+        </entry>
+        <entry form="LS"><!-- List item marker -->
+        </entry>
+        <entry form="MD"><!-- Modal -->
+        </entry>
+        <entry form="NN"><!-- Noun, singular or mass -->
+            <type>n(r) : n1; d(r) : n2; n : qlify((n1,"rdf:type",node("NAME"))) </type>
+        </entry>
+        <entry form="NNS"><!-- Noun, plural -->
             <type>n : node("NAME")</type>
             <type>n(r) : n1; d(r) : n2; n : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
-        <entry form="PRP">
-        	<type>n : node("NAME")</type>
-        </entry>
-        <entry form="NNP">
+        <entry form="NNP"><!-- Proper noun, singular -->
             <type>n : node("NAME")</type>
         </entry>
-        <entry form="VBP">
+        <entry form="NNPS"><!-- Proper noun, plural -->
+            <type>n : node("NAME")</type>
+        </entry>
+        <entry form="PDT"><!-- Predeterminer -->
+        </entry>
+        <entry form="POS"><!-- Possessive ending -->
+        </entry>
+        <entry form="PRP"><!-- Personal pronoun -->
+        	<type>n : node("NAME")</type>
+        </entry>
+        <entry form="PRP$"><!-- Possessive pronoun -->
+        </entry>
+        <entry form="RB"><!-- Adverb -->
+        </entry>
+        <entry form="RBR"><!-- Adverb, comparative -->
+        </entry>
+        <entry form="RBS"><!-- Adverb, superlative -->
+        </entry>
+        <entry form="RP"><!-- Particle -->
+        </entry>
+        <entry form="SYM"><!-- Symbol -->
+        </entry>
+        <entry form="TO"><!-- /to/ -->
+        </entry>
+        <entry form="UH"><!-- Interjection -->
+        </entry>
+        <entry form="VB"><!-- Verb, base form -->
+        </entry>
+        <entry form="VBD"><!-- Verb, past tense -->
+        </entry>
+        <entry form="VBG"><!-- Verb, gerund or present participle -->
+        </entry>
+        <entry form="VBN"><!-- Verb, past participle -->
+        </entry>
+        <entry form="VBP"><!-- Verb, non-3rd person singular present -->
             <type>n(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
             <type>n(r) : n1; s : (n1,"NAME","true")</type>
         </entry>
-        <entry form="VBZ">
+        <entry form="VBZ"><!-- Verb, 3rd person singular present -->
             <type>n(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
             <type>n(r) : n1; s : (n1,"NAME","null")</type>
         </entry>
-        <entry form="DT">
-            <type>d : "null"; n : fresh_node</type>
+        <entry form="WDT"><!-- Wh-determiner -->
         </entry>
-        <entry form="WP">
+        <entry form="WP"><!-- Wh-pronoun -->
         	<type>n(r) : n1; n : qlify(s2); s(l) : s2; n : n1</type>
+        </entry>
+        <entry form="WP$"><!-- Possessive wh-pronoun -->
+        </entry>
+        <entry form="WRB"><!-- Wh-adverb -->
         </entry>
     </entries>    
 </lexicon>
+

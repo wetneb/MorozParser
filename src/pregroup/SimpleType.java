@@ -69,4 +69,9 @@ public class SimpleType
 				output += "l";
 		return (output+"}");
 	}
+	
+	public String getBase()
+	{
+		return base;
+	}
 }

@@ -11,6 +11,7 @@
                 text-align: center;
                 margin: 50px auto;
             }
+            #request { height: 50px; }
             #result
             {
                 width:50%;
@@ -33,10 +34,15 @@
        alt="Fork me on GitHub">
         </a>
         
-
+       <div id="request">
+            <form action="process.html" method="post">
+                <input type="text" name="sentence" value="$SENTENCE" size="50"/>
+                <input type="submit" value="Process" />
+            </form>
+        </div>
         <div id="result">
         <h3>Result</h3>
-        <p>$SENTENCE</p>
+
         $OUTPUT
         </div>
         <div id="logos">
