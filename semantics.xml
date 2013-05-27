@@ -9,6 +9,8 @@
     		<type>\1 : "null"</type>
     	</entry>
         <entry form="CC"><!-- Coordinating conjuction -->
+        	<type>s(r) : s1; s : (reify(s1),"NAME",reify(s2)); s(l) : s2</type>
+        	<type>n(r) : n1; n : qlify((qlify((fresh_node,"first",n1)),"second",n2)); n(l) : n2</type>
         </entry>
         <entry form="CD"><!-- Cardinal number -->
         </entry>
@@ -20,9 +22,11 @@
         <entry form="FW"><!-- Foreign word -->
         </entry>
         <entry form="IN"><!-- Preposition or subordinating conjunction -->
+        	 <type>n : reify(s2); s(r) : s1; s : s1; s(l) : s2</type>
+        	 <!-- <type>n : qlify((qlify((qlify((qlify((fresh_node,"rdf:type","rdf:Statement")),"rdf:subject",n1)),"rdf:predicate",n2)),"rdf:object",n3)); n(l) : n1; n(l) : n2; n(l) : n3</type> -->
         </entry>
         <entry form="JJ"><!-- Adjective -->
-            <type>n : qlify((n1,"isNAME","true")) ; n(l) : n1</type>
+            <type>n : qlify((n1,"is-NAME","true")) ; n(l) : n1</type>
             <type>n(r) : n1 ; n : qlify((n1,"is_NAME","true"))</type>
         </entry>
         <entry form="JJR"><!-- Adjective, comparative -->
@@ -37,7 +41,7 @@
             <type>n(r) : n1; d(r) : n2; n : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
         <entry form="NNS"><!-- Noun, plural -->
-            <type>n : node("NAME")</type>
+            <type>n : qlify((fresh_node,"rdf:type",node("NAME")))</type>
             <type>n(r) : n1; d(r) : n2; n : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
         <entry form="NNP"><!-- Proper noun, singular -->
@@ -56,6 +60,7 @@
         <entry form="PRP$"><!-- Possessive pronoun -->
         </entry>
         <entry form="RB"><!-- Adverb -->
+            <type>s(r) : s1; s : s1</type>
         </entry>
         <entry form="RBR"><!-- Adverb, comparative -->
         </entry>

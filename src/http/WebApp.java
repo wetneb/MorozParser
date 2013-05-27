@@ -171,7 +171,7 @@ public class WebApp implements Container
 				{
 					ExprResolver resolver = new ExprResolver(phrase, p.getReduction());
 					
-					genImage(TikzGraphExpr.draw(phrase, sentence, p.getReduction(),resolver));
+					genImage(TikzGraphExpr.draw(phrase, sentence, p.getReduction(),resolver,false));
 					messages += "<h5>Type reduction</h5>\n"+
 							"<img alt=\"Type reduction\" src=\"tmp/img/output.png\" />\n\n";
 					

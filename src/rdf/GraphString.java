@@ -53,6 +53,9 @@ public class GraphString extends PhraseString
 		{
 			HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
 			
+			if(candidates.size() == 1 && candidates.get(0).size() == 1 && candidates.get(0).get(0).getType().isUnit())
+				continue;
+			
 			addLB();
 			addStar();
 			for(List<GraphExpr> type : candidates)
