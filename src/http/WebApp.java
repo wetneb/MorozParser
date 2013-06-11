@@ -36,6 +36,7 @@ import pregroup.SimpleType;
 
 import rdf.GraphCompiler;
 import rdf.GraphString;
+import rdf.ModelViewer;
 import rdf.TypeException;
 import tagging.StanfordTagger;
 import util.InternalException;
@@ -58,7 +59,7 @@ public class WebApp implements Container
 	private String tokenError;
 	private String seemsIncorrect;
 			
-	private final static Integer port = 4040;
+	private final static Integer port = 4041;
 	//private String errorPage;
 	
 	private SemanticLexicon sem;
@@ -182,10 +183,16 @@ public class WebApp implements Container
 						compiler.assume(res);
 
 						String graph = compiler.dumpTriples();
-						messages += "<h5>Graph</h5>\n"+
+						messages += "<h5>Triples</h5>\n"+
 								    "<pre>\n"+
 								    escapeHtml(graph)+
 								    "\n</pre>\n\n";
+						
+						ModelViewer mv = new ModelViewer(compiler.getModel());
+						genGraph(mv.toDot());
+						
+						messages += "<h5>Graph</h5>\n" +
+									"<img alt=\"RDF graph\" src=\"tmp/img/graph.png\" />\n\n";
 					} catch (TypeException e) {
 						throw new UserInputError("Type exception in the grammar:<br/>"+e.what+thatsMyFault);
 					}
@@ -243,6 +250,38 @@ public class WebApp implements Container
 			p = builder.start();
 			p.waitFor();
 			//Runtime.getRuntime().exec("convert -density 300 tmp/standalone.pdf tmp/standalone.png");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
+	private String genGraph(String dotCode)
+	{
+		try
+		{
+			PrintWriter out = new PrintWriter("tmp/output.dot");
+			out.println(dotCode);
+			out.close();
+		
+			List<String> dot = new ArrayList<String>();
+			dot.add("dot");
+			dot.add("-Tpng");
+			dot.add("output.dot");
+			dot.add("-o");
+			dot.add("img/graph.png");
+			
+			ProcessBuilder builder = new ProcessBuilder(dot);
+			builder.directory(new File("tmp"));
+			Process p = builder.start();
+			p.waitFor();
 		}
 		catch(IOException e)
 		{

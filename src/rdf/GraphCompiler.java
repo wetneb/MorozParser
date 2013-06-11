@@ -22,11 +22,17 @@ public class GraphCompiler
 {
 	private Model model;
 	private ExprResolver resolver;
+	private Integer nextBlankId = 0;
 	
 	public GraphCompiler(ExprResolver r)
 	{
 		model = ModelFactory.createDefaultModel();
 		resolver = r;
+	}
+	
+	public Model getModel()
+	{
+		return model;
 	}
 	
 	public String dumpTriples()
@@ -59,7 +65,8 @@ public class GraphCompiler
 			}
 			else if(n.isFresh())
 			{
-				return model.createResource();
+				nextBlankId++;
+				return model.createResource("blank"+nextBlankId);
 			}
 			else if(n.isMorph())
 			{
