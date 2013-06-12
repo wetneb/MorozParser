@@ -77,14 +77,15 @@ public class WebApp implements Container
 			response.setValue("Server", "PregroupSPARQL/1.0 (Simple)");
 			response.setDate("Date", time);
 			response.setDate("Last-Modified", time);
+
+			if(pageName.equals("/reload"))
+				sem.load("semantics.xml");
 			
 			System.out.println("Requested \""+pageName+"\"");
-			if(pageName.equals("/index.html") || pageName.equals("/"))
+			if(pageName.equals("/index.html") || pageName.equals("/") || pageName.equals("/reload"))
 				body.println(homePage);
 			else if(pageName.equals("/process.html"))
 				body.println(processSentence(request.getQuery().get("sentence")));
-			else if(pageName.equals("/reload"))
-				sem.load("semantics.xml");
 			else if(pageName.startsWith("/tmp/img/"))
 			{
 				//! TODO THIS IS A BACKDOOOOOOOOR
