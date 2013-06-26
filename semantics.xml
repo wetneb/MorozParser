@@ -15,7 +15,7 @@
         <entry form="CD"><!-- Cardinal number -->
         </entry>
         <entry form="DT"><!-- Determiner -->
-            <type>d : "null"; n : fresh_node</type>
+            <type>d : fresh_node</type>
         </entry>
         <entry form="EX"><!-- Existential /there/ -->
         </entry>
@@ -27,7 +27,9 @@
         </entry>
         <entry form="JJ"><!-- Adjective -->
             <type>n : qlify((n1,"is-NAME","true")) ; n(l) : n1</type>
-            <type>n(r) : n1 ; n : qlify((n1,"is_NAME","true"))</type>
+            <type>n(r) : n1 ; n : qlify((n1,"is-NAME","true"))</type>
+            <type>d : qlify((n1,"is-NAME","true")) ; d(l) : n1</type>
+            <type>d(r) : n1 ; d : qlify((n1,"is-NAME","true"))</type>
         </entry>
         <entry form="JJR"><!-- Adjective, comparative -->
         </entry>
@@ -38,11 +40,11 @@
         <entry form="MD"><!-- Modal -->
         </entry>
         <entry form="NN"><!-- Noun, singular or mass -->
-            <type>n(r) : n1; d(r) : n2; n : qlify((n1,"rdf:type",node("NAME"))) </type>
+            <type>d(r) : n1; n : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
         <entry form="NNS"><!-- Noun, plural -->
             <type>n : qlify((fresh_node,"rdf:type",node("NAME")))</type>
-            <type>n(r) : n1; d(r) : n2; n : qlify((n1,"rdf:type",node("NAME"))) </type>
+            <type>d(r) : n1; n : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
         <entry form="NNP"><!-- Proper noun, singular -->
             <type>n : node("NAME")</type>
