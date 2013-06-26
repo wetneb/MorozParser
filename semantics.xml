@@ -28,7 +28,6 @@
         <entry form="JJ"><!-- Adjective -->
             <type>n : qlify((n1,"is-NAME","true")) ; n(l) : n1</type>
             <type>n(r) : n1 ; n : qlify((n1,"is-NAME","true"))</type>
-            <type>d : qlify((n1,"is-NAME","true")) ; d(l) : n1</type>
             <type>d(r) : n1 ; d : qlify((n1,"is-NAME","true"))</type>
         </entry>
         <entry form="JJR"><!-- Adjective, comparative -->
