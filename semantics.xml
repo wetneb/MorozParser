@@ -4,12 +4,20 @@
         <rel smaller="p" greater="\pi_2" />
         <rel smaller="i" greater="j" />
         <rel smaller="n_p" greater="n" />
+        <rel smaller="n_s" greater="n" />
     </relations>
     <entries>
+        <entry form="is">
+        	<type>n_s(r) : n1; s : s2; s(l) : s2; n : n1</type>
+        </entry>
+        <entry form="are">
+        	<type>n_p(r) : n1; s : s2; s(l) : s2; n : n1</type>
+        </entry>
+        
     	<entry tag=".">
     		<type>\1 : "null"</type>
     	</entry>
-        <entry tag="CC"><!-- Coordinating conjuction -->
+        <entry tag="CC"><!-- Coordinating conjunction -->
         	<type>s(r) : s1; s : (reify(s1),"NAME",reify(s2)); s(l) : s2</type>
         	<type>n(r) : n1; n : qlify((qlify((fresh_node,"first",n1)),"second",n2)); n(l) : n2</type>
         </entry>
@@ -30,6 +38,7 @@
             <type>n_p : qlify((n1,"is-NAME","true")) ; n_p(l) : n1</type>
             <type>n_p(r) : n1 ; n_p : qlify((n1,"is-NAME","true"))</type>
             <type>d(r) : n1 ; d : qlify((n1,"is-NAME","true"))</type>
+            <type>n(r) : n1 ; s : (n1,"is-NAME","true")</type>
         </entry>
         <entry tag="JJR"><!-- Adjective, comparative -->
         </entry>
@@ -40,17 +49,17 @@
         <entry tag="MD"><!-- Modal -->
         </entry>
         <entry tag="NN"><!-- Noun, singular or mass -->
-            <type>d(r) : n1; n : qlify((n1,"rdf:type",node("NAME"))) </type>
+            <type>d(r) : n1; n_s : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
         <entry tag="NNS"><!-- Noun, plural -->
             <type>n_p : qlify((fresh_node,"rdf:type",node("NAME")))</type>
             <type>d(r) : n1; n_p : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
         <entry tag="NNP"><!-- Proper noun, singular -->
-            <type>n : node("NAME")</type>
+            <type>n_s : node("NAME")</type>
         </entry>
         <entry tag="NNPS"><!-- Proper noun, plural -->
-            <type>n : node("NAME")</type>
+            <type>n_p : node("NAME")</type>
         </entry>
         <entry tag="PDT"><!-- Predeterminer -->
         </entry>
@@ -77,6 +86,8 @@
         <entry tag="UH"><!-- Interjection -->
         </entry>
         <entry tag="VB"><!-- Verb, base form -->
+            <type>n_p(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
+            <type>n_p(r) : n1; s : (n1,"NAME","null")</type>
         </entry>
         <entry tag="VBD"><!-- Verb, past tense -->
         </entry>
@@ -86,11 +97,11 @@
         </entry>
         <entry tag="VBP"><!-- Verb, non-3rd person singular present -->
             <type>n(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
-            <type>n(r) : n1; s : (n1,"NAME","true")</type>
+            <type>n(r) : n1; s : (n1,"NAME","null")</type>
         </entry>
         <entry tag="VBZ"><!-- Verb, 3rd person singular present -->
-            <type>n(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
-            <type>n(r) : n1; s : (n1,"NAME","null")</type>
+            <type>n_s(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
+            <type>n_s(r) : n1; s : (n1,"NAME","null")</type>
         </entry>
         <entry tag="WDT"><!-- Wh-determiner -->
         </entry>

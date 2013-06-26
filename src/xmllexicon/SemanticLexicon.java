@@ -134,6 +134,9 @@ public class SemanticLexicon
 					catch (Exception e) {
 						throw new InternalException("Unable to parse the following type: "+rt);
 					}
+					catch(Error e) {
+						throw new InternalException("Unable to parse the following type: "+rt);
+					}
 				}
 				
 				if(form != null && form != "")
