@@ -28,7 +28,8 @@
     <xsd:sequence>
         <xsd:element name="type" type="xsd:string" maxOccurs="unbounded" />
     </xsd:sequence>
-    <xsd:attribute name="form" type="xsd:string" />
+    <xsd:attribute name="form" use="optional" type="xsd:string" />
+    <xsd:attribute name="tag" use="optional" type="xsd:string" />
 </xsd:complexType>
 
 <xsd:complexType name="TypeRel">

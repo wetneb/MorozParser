@@ -15,6 +15,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import pregroup.Lexicon;
 import pregroup.PartialComparator;
 import pregroup.TypeString;
@@ -23,11 +25,13 @@ import util.UnknownTagException;
 
 
 public class SemanticLexicon
-	extends HashMap<String, List<List<GraphExpr>>>
-    implements Lexicon
+	implements Lexicon
 {
-	private static final long serialVersionUID = 1L;
-	
+	private HashMap<String, List<List<GraphExpr>>> mFromTag =
+			new HashMap<String, List<List<GraphExpr>>>();
+	private HashMap<String, List<List<GraphExpr>>> mFromForm =
+			new HashMap<String, List<List<GraphExpr>>>();
+
 	private TypeRelations rels;
 
 	private static TypeString stringOfList(List<GraphExpr> l)
@@ -38,13 +42,21 @@ public class SemanticLexicon
 		return res;
 	}
 	
-	public List<List<List<GraphExpr>>> graphExprs(List<String> tags) throws UnknownTagException
+	public List<List<GraphExpr>> get(Pair<String,String> taggedWord)
+	{
+		List<List<GraphExpr>> res = mFromForm.get(taggedWord.getLeft());
+		if(res == null)
+			return mFromTag.get(taggedWord.getRight());
+		return res;
+	}
+	
+	public List<List<List<GraphExpr>>> graphExprs(List<Pair<String,String>> sentence) throws UnknownTagException
 	{
 		List<List<List<GraphExpr>>> res = new ArrayList<List<List<GraphExpr>>>();
 		
-		for(String tag : tags)
+		for(Pair<String,String> taggedWord : sentence)
 		{
-			List<List<GraphExpr>> l = get(tag);
+			List<List<GraphExpr>> l = get(taggedWord);
 
 			if(l != null && !l.isEmpty())
 			{
@@ -59,18 +71,18 @@ public class SemanticLexicon
 				res.add(cloned);
 			}
 			else
-				throw new UnknownTagException(tag);
+				throw new UnknownTagException(taggedWord.getRight());
 		}
 		
 		return res;
 	}
 	
-	public List<List<TypeString>> types(List<String> sentence)
+	public List<List<TypeString>> types(List<Pair<String,String>> sentence)
 	{
 		List<List<TypeString>> res = new ArrayList<List<TypeString>>();
-		for(String word : sentence)
+		for(Pair<String,String> taggedWord : sentence)
 		{
-			List<List<GraphExpr>> o = get(word);
+			List<List<GraphExpr>> o = get(taggedWord);
 			List<TypeString> l = new ArrayList<TypeString>();
 			if(o == null)
 				res.add(new ArrayList<TypeString>());
@@ -104,6 +116,7 @@ public class SemanticLexicon
 		{
 			for(EntryType ent : entries.getEntry()) {
 				String form = ent.getForm();
+				String tag = ent.getTag();
 				List<String> rawTypes = ent.getType();
 				List<List<GraphExpr>> res = new ArrayList<List<GraphExpr>>();
 				
@@ -123,7 +136,12 @@ public class SemanticLexicon
 					}
 				}
 				
-				put(form, res);
+				if(form != null && form != "")
+					mFromForm.put(form, res);
+				else if(tag != null)
+					mFromTag.put(tag, res);
+				else
+					System.err.println("Undefined tag or form.");
 			}
 		}
 		else System.err.println("Warning, the lexicon loaded has no <entries> section.");

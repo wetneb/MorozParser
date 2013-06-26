@@ -42,7 +42,6 @@ public class App {
 		//lex.loadTagger();
 		
 		String input = "John loves Mary who loves Peter.";
-
 		
 		List<String> sentence;
 		try {
@@ -58,7 +57,7 @@ public class App {
 			try
 			{
 				GraphString phrase =
-						new GraphString(sem, tagger.tagSentence(sentence), sentence, target);
+						new GraphString(sem, tagger.tagSentence(sentence), target);
 				
 				Parser p = new Parser(phrase, sem.getComparator());
 				System.out.println(phrase.toString());

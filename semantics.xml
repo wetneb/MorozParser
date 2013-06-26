@@ -3,102 +3,103 @@
     <relations>
         <rel smaller="p" greater="\pi_2" />
         <rel smaller="i" greater="j" />
+        <rel smaller="n_p" greater="n" />
     </relations>
     <entries>
-    	<entry form=".">
+    	<entry tag=".">
     		<type>\1 : "null"</type>
     	</entry>
-        <entry form="CC"><!-- Coordinating conjuction -->
+        <entry tag="CC"><!-- Coordinating conjuction -->
         	<type>s(r) : s1; s : (reify(s1),"NAME",reify(s2)); s(l) : s2</type>
         	<type>n(r) : n1; n : qlify((qlify((fresh_node,"first",n1)),"second",n2)); n(l) : n2</type>
         </entry>
-        <entry form="CD"><!-- Cardinal number -->
+        <entry tag="CD"><!-- Cardinal number -->
         </entry>
-        <entry form="DT"><!-- Determiner -->
+        <entry tag="DT"><!-- Determiner -->
             <type>d : fresh_node</type>
         </entry>
-        <entry form="EX"><!-- Existential /there/ -->
+        <entry tag="EX"><!-- Existential /there/ -->
         </entry>
-        <entry form="FW"><!-- Foreign word -->
+        <entry tag="FW"><!-- Foreign word -->
         </entry>
-        <entry form="IN"><!-- Preposition or subordinating conjunction -->
+        <entry tag="IN"><!-- Preposition or subordinating conjunction -->
         	 <type>n : reify(s2); s(r) : s1; s : s1; s(l) : s2</type>
         	 <!-- <type>n : qlify((qlify((qlify((qlify((fresh_node,"rdf:type","rdf:Statement")),"rdf:subject",n1)),"rdf:predicate",n2)),"rdf:object",n3)); n(l) : n1; n(l) : n2; n(l) : n3</type> -->
         </entry>
-        <entry form="JJ"><!-- Adjective -->
-            <type>n : qlify((n1,"is-NAME","true")) ; n(l) : n1</type>
-            <type>n(r) : n1 ; n : qlify((n1,"is-NAME","true"))</type>
+        <entry tag="JJ"><!-- Adjective -->
+            <type>n_p : qlify((n1,"is-NAME","true")) ; n_p(l) : n1</type>
+            <type>n_p(r) : n1 ; n_p : qlify((n1,"is-NAME","true"))</type>
             <type>d(r) : n1 ; d : qlify((n1,"is-NAME","true"))</type>
         </entry>
-        <entry form="JJR"><!-- Adjective, comparative -->
+        <entry tag="JJR"><!-- Adjective, comparative -->
         </entry>
-        <entry form="JJS"><!-- Adjective, superlative -->
+        <entry tag="JJS"><!-- Adjective, superlative -->
         </entry>
-        <entry form="LS"><!-- List item marker -->
+        <entry tag="LS"><!-- List item marker -->
         </entry>
-        <entry form="MD"><!-- Modal -->
+        <entry tag="MD"><!-- Modal -->
         </entry>
-        <entry form="NN"><!-- Noun, singular or mass -->
+        <entry tag="NN"><!-- Noun, singular or mass -->
             <type>d(r) : n1; n : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
-        <entry form="NNS"><!-- Noun, plural -->
-            <type>n : qlify((fresh_node,"rdf:type",node("NAME")))</type>
-            <type>d(r) : n1; n : qlify((n1,"rdf:type",node("NAME"))) </type>
+        <entry tag="NNS"><!-- Noun, plural -->
+            <type>n_p : qlify((fresh_node,"rdf:type",node("NAME")))</type>
+            <type>d(r) : n1; n_p : qlify((n1,"rdf:type",node("NAME"))) </type>
         </entry>
-        <entry form="NNP"><!-- Proper noun, singular -->
+        <entry tag="NNP"><!-- Proper noun, singular -->
             <type>n : node("NAME")</type>
         </entry>
-        <entry form="NNPS"><!-- Proper noun, plural -->
+        <entry tag="NNPS"><!-- Proper noun, plural -->
             <type>n : node("NAME")</type>
         </entry>
-        <entry form="PDT"><!-- Predeterminer -->
+        <entry tag="PDT"><!-- Predeterminer -->
         </entry>
-        <entry form="POS"><!-- Possessive ending -->
+        <entry tag="POS"><!-- Possessive ending -->
         </entry>
-        <entry form="PRP"><!-- Personal pronoun -->
+        <entry tag="PRP"><!-- Personal pronoun -->
         	<type>n : node("NAME")</type>
         </entry>
-        <entry form="PRP$"><!-- Possessive pronoun -->
+        <entry tag="PRP$"><!-- Possessive pronoun -->
         </entry>
-        <entry form="RB"><!-- Adverb -->
+        <entry tag="RB"><!-- Adverb -->
             <type>s(r) : s1; s : s1</type>
         </entry>
-        <entry form="RBR"><!-- Adverb, comparative -->
+        <entry tag="RBR"><!-- Adverb, comparative -->
         </entry>
-        <entry form="RBS"><!-- Adverb, superlative -->
+        <entry tag="RBS"><!-- Adverb, superlative -->
         </entry>
-        <entry form="RP"><!-- Particle -->
+        <entry tag="RP"><!-- Particle -->
         </entry>
-        <entry form="SYM"><!-- Symbol -->
+        <entry tag="SYM"><!-- Symbol -->
         </entry>
-        <entry form="TO"><!-- /to/ -->
+        <entry tag="TO"><!-- /to/ -->
         </entry>
-        <entry form="UH"><!-- Interjection -->
+        <entry tag="UH"><!-- Interjection -->
         </entry>
-        <entry form="VB"><!-- Verb, base form -->
+        <entry tag="VB"><!-- Verb, base form -->
         </entry>
-        <entry form="VBD"><!-- Verb, past tense -->
+        <entry tag="VBD"><!-- Verb, past tense -->
         </entry>
-        <entry form="VBG"><!-- Verb, gerund or present participle -->
+        <entry tag="VBG"><!-- Verb, gerund or present participle -->
         </entry>
-        <entry form="VBN"><!-- Verb, past participle -->
+        <entry tag="VBN"><!-- Verb, past participle -->
         </entry>
-        <entry form="VBP"><!-- Verb, non-3rd person singular present -->
+        <entry tag="VBP"><!-- Verb, non-3rd person singular present -->
             <type>n(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
             <type>n(r) : n1; s : (n1,"NAME","true")</type>
         </entry>
-        <entry form="VBZ"><!-- Verb, 3rd person singular present -->
+        <entry tag="VBZ"><!-- Verb, 3rd person singular present -->
             <type>n(r) : n1; s : (n1,"NAME",n2); n(l) : n2</type>
             <type>n(r) : n1; s : (n1,"NAME","null")</type>
         </entry>
-        <entry form="WDT"><!-- Wh-determiner -->
+        <entry tag="WDT"><!-- Wh-determiner -->
         </entry>
-        <entry form="WP"><!-- Wh-pronoun -->
+        <entry tag="WP"><!-- Wh-pronoun -->
         	<type>n(r) : n1; n : qlify(s2); s(l) : s2; n : n1</type>
         </entry>
-        <entry form="WP$"><!-- Possessive wh-pronoun -->
+        <entry tag="WP$"><!-- Possessive wh-pronoun -->
         </entry>
-        <entry form="WRB"><!-- Wh-adverb -->
+        <entry tag="WRB"><!-- Wh-adverb -->
         </entry>
     </entries>    
 </lexicon>

@@ -3,6 +3,8 @@ package pregroup;
 import java.util.List;
 import java.util.Vector;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 //! A string made of simple types, *, < and >
 public class PhraseString extends Vector<PhraseElem>
 {
@@ -15,7 +17,7 @@ public class PhraseString extends Vector<PhraseElem>
 	}
 	
 	// Construct from a list of words, a lexicon and a target type
-	public PhraseString(Lexicon lex, List<String> lst, TypeString target)
+	public PhraseString(Lexicon lex, List<Pair<String,String>> lst, TypeString target)
 	{
 		this(lex.types(lst), target);
 	}
@@ -42,7 +44,7 @@ public class PhraseString extends Vector<PhraseElem>
 		addType(target.right());
 	}
 	
-	public PhraseString(Lexicon lex, List<String> sentence,
+	public PhraseString(Lexicon lex, List<Pair<String,String>> sentence,
 			SimpleType target) {
 		this(lex,sentence,new TypeString(target));
 	}

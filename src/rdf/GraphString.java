@@ -8,6 +8,8 @@ import graphexpr.ProducerExpr;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import pregroup.PhraseString;
 import pregroup.SimpleType;
 import pregroup.TypeString;
@@ -22,14 +24,14 @@ public class GraphString extends PhraseString
 	
 	private HashMap<Integer, PatternExpr> patterns;
 
-	public GraphString(SemanticLexicon lex, List<String> lst, List<String> sen, TypeString target) throws UnknownTagException, TypeException
+	public GraphString(SemanticLexicon lex, List<Pair<String,String>> sen, TypeString target) throws UnknownTagException, TypeException
 	{
-		this(lex.graphExprs(lst), sen, target);
+		this(lex.graphExprs(sen), sen, target);
 	}
 	
-	public GraphString(SemanticLexicon lex, List<String> lst, List<String> sen, SimpleType target) throws UnknownTagException, TypeException
+	public GraphString(SemanticLexicon lex, List<Pair<String,String>> sen, SimpleType target) throws UnknownTagException, TypeException
 	{
-		this(lex.graphExprs(lst), sen, new TypeString(target));
+		this(lex.graphExprs(sen), sen, new TypeString(target));
 	}
 	
 	public PatternExpr getPattern(int index)
@@ -44,7 +46,7 @@ public class GraphString extends PhraseString
 		patterns.put(idx, p);
 	}
 	
-	public GraphString(List<List<List<GraphExpr>>> lst, List<String> sen, TypeString target) throws TypeException
+	public GraphString(List<List<List<GraphExpr>>> lst, List<Pair<String,String>> sen, TypeString target) throws TypeException
 	{
 		//! TODO Redesign this method : separate HashMap generation and type string generation
 		patterns = new HashMap<Integer, PatternExpr>();
@@ -80,7 +82,7 @@ public class GraphString extends PhraseString
 					{
 						ProducerExpr p = (ProducerExpr) ge;
 						try {
-							p.pattern.shift(map, sen.get(widx));
+							p.pattern.shift(map, sen.get(widx).getLeft());
 						} catch(NotFoundException e)
 						{
 							throw new TypeException("Invalid pattern \""+p.pattern.toString()+

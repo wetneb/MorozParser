@@ -11,27 +11,35 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import pregroup.Lexicon;
 import pregroup.PartialComparator;
 import pregroup.TypeString;
 
 
 public class XmlLexicon
-	extends HashMap<String, List<TypeString>>
 	implements Lexicon
 {
-	private static final long serialVersionUID = 1L;
+	private HashMap<String, List<TypeString>> mFromTag;
+	private HashMap<String, List<TypeString>> mFromForm;
 	
 	private TypeRelations rels;
 
-	public List<List<TypeString>> types(List<String> sentence)
+	public List<List<TypeString>> types(List<Pair<String,String>> sentence)
 	{
 		List<List<TypeString>> res = new ArrayList<List<TypeString>>();
-		for(String word : sentence)
+		for(Pair<String,String> word : sentence)
 		{
-			List<TypeString> l = get(word);
+			List<TypeString> l = mFromForm.get(word.getLeft());
 			if(l == null)
-				res.add(new ArrayList<TypeString>());
+			{
+				List<TypeString> l2 = mFromTag.get(word.getRight());
+				if(l2 == null)
+					res.add(new ArrayList<TypeString>());
+				else
+					res.add(l2);
+			}
 			else res.add(l);
 		}
 		return res;
@@ -54,13 +62,18 @@ public class XmlLexicon
 		//! TODO : add error handling ! (if entries.getEntry() is null (when there's no <entries>)
 		for(EntryType ent : entries.getEntry()) {
 			String form = ent.getForm();
+			String tag = ent.getTag();
+			
 			List<String> rawTypes = ent.getType();
 			List<TypeString> res = new ArrayList<TypeString>();
 			
 			for(String rt : rawTypes)
 				res.add(SimpleTypeParser.parse(rt));
 			
-			put(form, res);
+			if(form != "" && form != null)
+				mFromForm.put(form, res);
+			else
+				mFromTag.put(tag, res);
 		}
 		
 		} catch (JAXBException je) {

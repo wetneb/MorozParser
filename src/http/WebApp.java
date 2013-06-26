@@ -14,11 +14,13 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import latex.TikzGraphExpr;
 import latex.TikzReduction;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.core.Container;
@@ -58,6 +60,7 @@ public class WebApp implements Container
 	private String notSupported;
 	private String tokenError;
 	private String seemsIncorrect;
+	private PrintWriter logWriter;
 			
 	private final static Integer port = 4041;
 	//private String errorPage;
@@ -70,7 +73,9 @@ public class WebApp implements Container
 		try
 		{
 			PrintStream body = response.getPrintStream();
+		
 			long time = System.currentTimeMillis();
+			logWriter.println((new Date()).toString()+": request from "+request.getClientAddress().toString());
 			String pageName = request.getPath().getPath();
 			
 			response.setValue("Content-Type", "text/html");
@@ -115,6 +120,8 @@ public class WebApp implements Container
 	private String processSentence(String input)
 	{
 		String resPage = new String(resultPage);
+		logWriter.println((new Date()).toString()+": Input sentence: "+input);
+		logWriter.flush();
 
 		System.out.println("Input sentence: "+input);
 		
@@ -143,7 +150,7 @@ public class WebApp implements Container
 				SimpleType target =
 						new SimpleType("s", 0);
 				
-				List<String> tags = tagger.tagSentence(sentence);
+				List<Pair<String,String>> tags = tagger.tagSentence(sentence);
 				
 				messages += "<h5>Tagging</h5>\n"+
 							"<table>\n"+
@@ -152,15 +159,15 @@ public class WebApp implements Container
 					messages += "<td>"+escapeHtml(word)+"</td>";
 				messages += "\n</tr>\n"+
 							"<tr>\n";
-				for(String tag : tags)
-					messages += "<td>"+tag+"</td>";
+				for(Pair<String,String> tag : tags)
+					messages += "<td>"+tag.getRight()+"</td>";
 				messages += "\n</tr>\n"+
 							"</table>\n\n";
 				
 				
 				GraphString phrase;
 				try
-				{ phrase =new  GraphString(sem, tags, sentence, target);
+				{ phrase = new GraphString(sem, tags, target);
 				} catch(TypeException e)
 				{
 					throw new UserInputError(e.what+thatsMyFault);
@@ -307,6 +314,7 @@ public class WebApp implements Container
 			tokenError = readFile("www/tokenError.html");
 			resultPage = readFile("www/process.html");
 			seemsIncorrect = readFile("www/seemsIncorrect.html");
+			logWriter = new PrintWriter("requests.log");
 		}
 		catch(IOException e)
 		{
