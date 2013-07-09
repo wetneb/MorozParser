@@ -13,7 +13,12 @@
         <entry form="are">
         	<type>n_p(r) : n1; s : s2; s(l) : s2; n : n1</type>
         </entry>
-        
+        <entry form="who">
+        	<type>n(r) : n1; n : qlify(s2); s(l) : s2; n : n1</type>
+        	<type>n_s(r) : n1; n : qlify(s2); s(l) : s2; n_s : n1</type>
+        	<type>n_p(r) : n1; n : qlify(s2); s(l) : s2; n_p : n1</type>
+        </entry>
+       
     	<entry tag=".">
     		<type>\1 : "null"</type>
     	</entry>
@@ -106,7 +111,6 @@
         <entry tag="WDT"><!-- Wh-determiner -->
         </entry>
         <entry tag="WP"><!-- Wh-pronoun -->
-        	<type>n(r) : n1; n : qlify(s2); s(l) : s2; n : n1</type>
         </entry>
         <entry tag="WP$"><!-- Possessive wh-pronoun -->
         </entry>

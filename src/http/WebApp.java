@@ -41,6 +41,7 @@ import rdf.GraphString;
 import rdf.ModelViewer;
 import rdf.TypeException;
 import tagging.StanfordTagger;
+import util.FileUtils;
 import util.InternalException;
 import util.UnknownTagException;
 import xmllexicon.SemanticLexicon;
@@ -62,7 +63,7 @@ public class WebApp implements Container
 	private String seemsIncorrect;
 	private PrintWriter logWriter;
 			
-	private final static Integer port = 4041;
+	private final static Integer port = 4040;
 	//private String errorPage;
 	
 	private SemanticLexicon sem;
@@ -122,8 +123,6 @@ public class WebApp implements Container
 		String resPage = new String(resultPage);
 		logWriter.println((new Date()).toString()+": Input sentence: "+input);
 		logWriter.flush();
-
-		System.out.println("Input sentence: "+input);
 		
 		String messages = "";
 		
@@ -172,15 +171,15 @@ public class WebApp implements Container
 				{
 					throw new UserInputError(e.what+thatsMyFault);
 				}
-				
+
 				Parser p = new Parser(phrase, sem.getComparator());
 				System.out.println(phrase.toString());
 
 				if(p.run())
 				{
 					ExprResolver resolver = new ExprResolver(phrase, p.getReduction());
-					
-					genImage(TikzGraphExpr.draw(phrase, sentence, p.getReduction(),resolver,false));
+					TikzGraphExpr drawer = new TikzGraphExpr();
+					genImage(drawer.draw(phrase, sentence, p.getReduction(),resolver,false));
 					messages += "<h5>Type reduction</h5>\n"+
 							"<img alt=\"Type reduction\" src=\"tmp/img/output.png\" />\n\n";
 					
@@ -308,12 +307,12 @@ public class WebApp implements Container
 		super();
 		try
 		{
-			homePage = readFile("www/index.html");
-			thatsMyFault = readFile("www/thatsMyFault.html");
-			notSupported = readFile("www/notSupported.html");
-			tokenError = readFile("www/tokenError.html");
-			resultPage = readFile("www/process.html");
-			seemsIncorrect = readFile("www/seemsIncorrect.html");
+			homePage = FileUtils.readFile("www/index.html");
+			thatsMyFault = FileUtils.readFile("www/thatsMyFault.html");
+			notSupported = FileUtils.readFile("www/notSupported.html");
+			tokenError = FileUtils.readFile("www/tokenError.html");
+			resultPage = FileUtils.readFile("www/process.html");
+			seemsIncorrect = FileUtils.readFile("www/seemsIncorrect.html");
 			logWriter = new PrintWriter("requests.log");
 		}
 		catch(IOException e)
@@ -344,20 +343,6 @@ public class WebApp implements Container
 		{
 			System.err.println(e.what);
 		}
-	}
-
-	private String readFile( String file ) throws IOException {
-	    BufferedReader reader = new BufferedReader( new FileReader (file));
-	    String         line = null;
-	    StringBuilder  stringBuilder = new StringBuilder();
-	    String         ls = System.getProperty("line.separator");
-
-	    while( ( line = reader.readLine() ) != null ) {
-	        stringBuilder.append( line );
-	        stringBuilder.append( ls );
-	    }
-	    reader.close();
-	    return stringBuilder.toString();
 	}
 	
 	private byte[] readBinary(String fileName) throws IOException
