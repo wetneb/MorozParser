@@ -18,6 +18,9 @@
         	<type>n_s(r) : n1; n : qlify(s2); s(l) : s2; n_s : n1</type>
         	<type>n_p(r) : n1; n : qlify(s2); s(l) : s2; n_p : n1</type>
         </entry>
+        <entry form="says">
+            <type>n(r) : n1; s : (n1,"says",reify(s2)); s(l) : s2</type>
+        </entry>
        
     	<entry tag=".">
     		<type>\1 : "null"</type>

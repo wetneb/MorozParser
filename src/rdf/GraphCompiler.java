@@ -66,14 +66,21 @@ public class GraphCompiler
 			else if(n.isFresh())
 			{
 				nextBlankId++;
-				return model.createResource("blank"+nextBlankId);
+				return model.createResource("blank-"+nextBlankId);
 			}
 			else if(n.isMorph())
 			{
 				MorphExpr m = (MorphExpr)n;
 				if(m.isReify)
 				{
-					return compileStmt(m.triple).createReifiedStatement();
+					Statement stmt = compileStmt(m.triple);
+					nextBlankId++;
+					Resource blank = model.createResource("blank-"+nextBlankId);
+					blank.addProperty(model.createProperty("rdf:type"), model.createLiteral("rdf:Statement"));
+					blank.addProperty(model.createProperty("rdf:subject"), stmt.getSubject());
+					blank.addProperty(model.createProperty("rdf:predicate"), stmt.getPredicate());
+					blank.addProperty(model.createProperty("rdf:object"), stmt.getObject());
+					return blank;
 				}
 				else
 				{

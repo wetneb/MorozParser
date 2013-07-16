@@ -28,7 +28,7 @@ public class ModelViewer
 			Property property = stmt.getPredicate();
 			RDFNode object = stmt.getObject();
 			
-			output += subject.toString() + " -> " + object.toString() +
+			output += "\""+subject.toString() + "\" -> \"" + object.toString()+ "\"" +
 					" [label=\""+property.toString()+"\"];";
 		}
 		
