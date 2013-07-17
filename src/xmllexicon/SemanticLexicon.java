@@ -42,6 +42,16 @@ public class SemanticLexicon
 		return res;
 	}
 	
+	public HashMap<String, List<List<GraphExpr>>> getTagDict()
+	{
+		return mFromTag;
+	}
+	
+	public HashMap<String, List<List<GraphExpr>>> getFormDict()
+	{
+		return mFromForm;
+	}
+	
 	public List<List<GraphExpr>> get(Pair<String,String> taggedWord)
 	{
 		List<List<GraphExpr>> res = mFromForm.get(taggedWord.getLeft());

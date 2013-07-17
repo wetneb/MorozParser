@@ -26,4 +26,9 @@ public class ProducerExpr extends GraphExpr implements Cloneable
 	{
 		return type;
 	}
+	
+	public PatternExpr getPattern()
+	{
+		return pattern;
+	}
 }
